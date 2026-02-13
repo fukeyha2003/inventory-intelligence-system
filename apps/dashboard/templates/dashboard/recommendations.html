@@ -1,0 +1,342 @@
+{% extends 'base.html' %}
+
+{% block title %}Recommendations - Fashion Inventory Intelligence{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-header">
+            <h1><i class="bi bi-lightbulb"></i> Action Recommendations</h1>
+            <p class="text-muted mb-0">AI-powered recommendations for optimal inventory management</p>
+        </div>
+    </div>
+</div>
+
+<!-- Summary Stats -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-4">
+        <div class="card stat-card" style="border-left-color: #ef4444;">
+            <div class="stat-value" style="color: #ef4444;">{{ critical_actions|length }}</div>
+            <div class="stat-label">
+                <i class="bi bi-exclamation-octagon"></i> Critical Actions
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card stat-card" style="border-left-color: #f59e0b;">
+            <div class="stat-value" style="color: #f59e0b;">{{ high_priority|length }}</div>
+            <div class="stat-label">
+                <i class="bi bi-star"></i> High Priority
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card stat-card" style="border-left-color: #667eea;">
+            <div class="stat-value" style="color: #667eea;">{{ total_recommendations }}</div>
+            <div class="stat-label">
+                <i class="bi bi-list-check"></i> Total Recommendations
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Critical Actions -->
+{% if critical_actions %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-exclamation-triangle-fill"></i> Critical Actions Required
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    {% for alert in critical_actions %}
+                    <div class="list-group-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <h6 class="mb-1">{{ alert.product.product_name }}</h6>
+                                <small class="text-muted">{{ alert.product.sku }}</small>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="badge bg-danger">{{ alert.urgency }}</span>
+                                <br>
+                                <small class="text-muted">{{ alert.product.category }}</small>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <strong class="text-danger">{{ alert.overstock_risk_pct|floatformat:1 }}%</strong>
+                                <br>
+                                <small class="text-muted">Overstock Risk</small>
+                            </div>
+                            <div class="col-md-3">
+                                <i class="bi bi-lightbulb-fill text-warning"></i>
+                                <strong>Action:</strong>
+                                <p class="mb-0 small">{{ alert.recommended_action }}</p>
+                            </div>
+                            <div class="col-md-2 text-end">
+                                <button class="btn btn-sm btn-outline-success" onclick="markResolved({{ alert.id }})">
+                                    <i class="bi bi-check-circle"></i> Mark Done
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- High Priority -->
+{% if high_priority %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-warning">
+            <div class="card-header bg-warning">
+                <h5 class="mb-0">
+                    <i class="bi bi-star-fill"></i> High Priority Actions
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Risk Level</th>
+                                <th>Velocity</th>
+                                <th>Recommended Action</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for alert in high_priority|slice:":10" %}
+                            <tr>
+                                <td>
+                                    <strong>{{ alert.product.product_name }}</strong>
+                                    <br>
+                                    <small class="text-muted">{{ alert.product.sku }}</small>
+                                </td>
+                                <td>{{ alert.product.category }}</td>
+                                <td>
+                                    <span class="risk-badge-{{ alert.risk_level }}">{{ alert.get_risk_level_display }}</span>
+                                </td>
+                                <td>
+                                    {% if alert.velocity == 'fast' %}
+                                        <i class="bi bi-speedometer text-success"></i> Fast
+                                    {% elif alert.velocity == 'slow' %}
+                                        <i class="bi bi-speedometer2 text-danger"></i> Slow
+                                    {% else %}
+                                        <i class="bi bi-speedometer text-warning"></i> Medium
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <small>{{ alert.recommended_action|truncatewords:12 }}</small>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewDetails('{{ alert.product.sku }}')">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Medium Priority -->
+{% if medium_priority %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-info-circle"></i> Medium Priority Actions
+                    </h5>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="toggleMediumPriority()">
+                        <i class="bi bi-chevron-down"></i> Show/Hide
+                    </button>
+                </div>
+            </div>
+            <div class="card-body collapse" id="mediumPrioritySection">
+                <div class="row">
+                    {% for alert in medium_priority|slice:":6" %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6>{{ alert.product.product_name }}</h6>
+                                        <small class="text-muted">{{ alert.product.category }} • {{ alert.product.sku }}</small>
+                                    </div>
+                                    <span class="badge bg-info">{{ alert.urgency }}</span>
+                                </div>
+                                <hr>
+                                <p class="small mb-2">
+                                    <i class="bi bi-lightbulb text-warning"></i>
+                                    {{ alert.recommended_action }}
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">Risk: {{ alert.overstock_risk_pct|floatformat:1 }}%</small>
+                                    <button class="btn btn-sm btn-outline-success" onclick="markResolved({{ alert.id }})">
+                                        <i class="bi bi-check"></i> Done
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- No Recommendations -->
+{% if not critical_actions and not high_priority and not medium_priority %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-check-circle-fill" style="font-size: 5rem; color: #10b981;"></i>
+                <h3 class="mt-3">All Clear! 🎉</h3>
+                <p class="text-muted">No urgent actions required at this time.</p>
+                <p>Your inventory is in healthy condition.</p>
+                <div class="mt-4">
+                    <a href="/dashboard/overview/" class="btn btn-primary me-2">
+                        <i class="bi bi-speedometer2"></i> View Dashboard
+                    </a>
+                    <a href="/dashboard/risk-monitor/" class="btn btn-outline-secondary">
+                        <i class="bi bi-shield-check"></i> Risk Monitor
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Action Summary -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h6><i class="bi bi-info-circle"></i> Recommendation Guidelines</h6>
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-danger me-2">Critical</span>
+                            <small>Act within 24 hours</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-warning text-dark me-2">High</span>
+                            <small>Act within 1 week</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-info me-2">Medium</span>
+                            <small>Act within 2 weeks</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-secondary me-2">Low</span>
+                            <small>Monitor regularly</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function markResolved(alertId) {
+    if (confirm('Mark this recommendation as completed?')) {
+        fetch(`/api/alerts/${alertId}/resolve/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Marked as resolved!');
+            location.reload();
+        })
+        .catch(error => {
+            alert('Feature coming soon! Would mark alert as resolved.');
+        });
+    }
+}
+
+function viewDetails(sku) {
+    window.location.href = `/api/product/${sku}/`;
+}
+
+function toggleMediumPriority() {
+    const section = document.getElementById('mediumPrioritySection');
+    if (section.classList.contains('show')) {
+        section.classList.remove('show');
+    } else {
+        section.classList.add('show');
+    }
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Auto-refresh recommendations every 10 minutes
+setTimeout(() => {
+    const banner = document.createElement('div');
+    banner.className = 'alert alert-info position-fixed bottom-0 end-0 m-3';
+    banner.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Recommendations updated. <a href="#" onclick="location.reload()">Refresh page</a>';
+    document.body.appendChild(banner);
+}, 600000); // 10 minutes
+</script>
+
+<style>
+.card.border-danger {
+    border-width: 2px;
+}
+
+.card.border-warning {
+    border-width: 2px;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+</style>
+{% endblock %}

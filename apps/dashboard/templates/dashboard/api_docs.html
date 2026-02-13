@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - Fashion Inventory Intelligence</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+        }
+        
+        body {
+            background: #f8f9fa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+        
+        .endpoint-card {
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .endpoint-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .method-badge {
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+        }
+        
+        .method-get {
+            background: #10b981;
+            color: white;
+        }
+        
+        .method-post {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        
+        .sidebar {
+            position: sticky;
+            top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-graph-up-arrow"></i> Fashion Intelligence API
+            </a>
+            <a href="/dashboard/overview/" class="btn btn-light btn-sm">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="card sidebar">
+                    <div class="card-body">
+                        <h6 class="text-muted">Quick Navigation</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link" href="#forecast">Generate Forecast</a>
+                            <a class="nav-link" href="#risk">Risk Analysis</a>
+                            <a class="nav-link" href="#recommendations">Recommendations</a>
+                            <a class="nav-link" href="#product">Product Details</a>
+                            <a class="nav-link" href="#charts">Chart APIs</a>
+                        </nav>
+                        
+                        <hr>
+                        
+                        <h6 class="text-muted mt-4">Base URL</h6>
+                        <code>http://127.0.0.1:8000/api/</code>
+                        
+                        <h6 class="text-muted mt-4">Authentication</h6>
+                        <p class="small">None required (development)</p>
+                        
+                        <h6 class="text-muted mt-4">Response Format</h6>
+                        <p class="small">JSON</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <h1 class="mb-4">API Documentation</h1>
+                <p class="lead">RESTful API for Fashion Inventory Intelligence System</p>
+
+                <!-- Generate Forecast -->
+                <div id="forecast" class="card endpoint-card">
+                    <div class="card-body">
+                        <h4>
+                            <span class="method-badge method-post">POST</span>
+                            Generate Forecast
+                        </h4>
+                        <code class="text-muted">/api/forecast/</code>
+                        
+                        <p class="mt-3">Generate sales forecasts for one or more products.</p>
+                        
+                        <h6 class="mt-4">Request Body</h6>
+                        <div class="code-block">
+<pre>{
+    "product_id": "SKU00001",
+    "periods": 30
+}
+
+// OR for multiple products:
+
+{
+    "product_ids": ["SKU00001", "SKU00002", "SKU00003"],
+    "periods": 30
+}</pre>
+                        </div>
+                        
+                        <h6 class="mt-4">Response</h6>
+                        <div class="code-block">
+<pre>{
+    "status": "success",
+    "count": 1,
+    "forecasts": [
+        {
+            "product_id": "SKU00001",
+            "product_name": "Black Jackets",
+            "total_predicted_units": 120.5,
+            "avg_daily_units": 4.02,
+            "confidence_score": 0.75,
+            "forecast_start": "2026-02-09",
+            "forecast_end": "2026-03-10",
+            "daily_forecast": [...]
+        }
+    ]
+}</pre>
+                        </div>
+                        
+                        <a href="http://127.0.0.1:8000/api/forecast/" class="btn btn-primary btn-sm mt-3" target="_blank">
+                            <i class="bi bi-box-arrow-up-right"></i> Try it now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Risk Analysis -->
+                <div id="risk" class="card endpoint-card">
+                    <div class="card-body">
+                        <h4>
+                            <span class="method-badge method-get">GET</span>
+                            Risk Analysis
+                        </h4>
+                        <code class="text-muted">/api/risk-analysis/</code>
+                        
+                        <p class="mt-3">Get inventory risk analysis for products.</p>
+                        
+                        <h6 class="mt-4">Query Parameters</h6>
+                        <ul>
+                            <li><code>category</code> - Filter by product category</li>
+                            <li><code>risk_level</code> - Filter by risk level (high/medium/low)</li>
+                            <li><code>limit</code> - Number of results (default: 100)</li>
+                        </ul>
+                        
+                        <h6 class="mt-4">Example</h6>
+                        <div class="code-block">
+<pre>GET /api/risk-analysis/?category=Tops&risk_level=high&limit=10</pre>
+                        </div>
+                        
+                        <h6 class="mt-4">Response</h6>
+                        <div class="code-block">
+<pre>{
+    "status": "success",
+    "summary": {
+        "total_products": 100,
+        "high_risk_products": 20,
+        "high_risk_percentage": 20.0
+    },
+    "products": [...]
+}</pre>
+                        </div>
+                        
+                        <a href="http://127.0.0.1:8000/api/risk-analysis/?limit=10" class="btn btn-success btn-sm mt-3" target="_blank">
+                            <i class="bi bi-box-arrow-up-right"></i> Try it now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div id="recommendations" class="card endpoint-card">
+                    <div class="card-body">
+                        <h4>
+                            <span class="method-badge method-get">GET</span>
+                            Get Recommendations
+                        </h4>
+                        <code class="text-muted">/api/recommendations/</code>
+                        
+                        <p class="mt-3">Get actionable recommendations based on trends and risk.</p>
+                        
+                        <h6 class="mt-4">Query Parameters</h6>
+                        <ul>
+                            <li><code>type</code> - emerging/declining/all (default: all)</li>
+                            <li><code>limit</code> - Number of results (default: 20)</li>
+                        </ul>
+                        
+                        <h6 class="mt-4">Example</h6>
+                        <div class="code-block">
+<pre>GET /api/recommendations/?type=emerging&limit=5</pre>
+                        </div>
+                        
+                        <a href="http://127.0.0.1:8000/api/recommendations/" class="btn btn-success btn-sm mt-3" target="_blank">
+                            <i class="bi bi-box-arrow-up-right"></i> Try it now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Details -->
+                <div id="product" class="card endpoint-card">
+                    <div class="card-body">
+                        <h4>
+                            <span class="method-badge method-get">GET</span>
+                            Product Details
+                        </h4>
+                        <code class="text-muted">/api/product/&lt;sku&gt;/</code>
+                        
+                        <p class="mt-3">Get complete intelligence for a single product.</p>
+                        
+                        <h6 class="mt-4">Example</h6>
+                        <div class="code-block">
+<pre>GET /api/product/SKU00001/</pre>
+                        </div>
+                        
+                        <h6 class="mt-4">Response</h6>
+                        <div class="code-block">
+<pre>{
+    "status": "success",
+    "product": {
+        "sku": "SKU00001",
+        "name": "Black Jackets",
+        "category": "Outerwear",
+        "price": 89.99
+    },
+    "inventory": {...},
+    "forecast": [...],
+    "risk": {...},
+    "recent_sales": [...]
+}</pre>
+                        </div>
+                        
+                        <a href="http://127.0.0.1:8000/api/product/SKU00001/" class="btn btn-success btn-sm mt-3" target="_blank">
+                            <i class="bi bi-box-arrow-up-right"></i> Try it now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Chart APIs -->
+                <div id="charts" class="card endpoint-card">
+                    <div class="card-body">
+                        <h4><i class="bi bi-graph-up"></i> Chart Data APIs</h4>
+                        
+                        <h6 class="mt-3">Revenue Trend</h6>
+                        <code>GET /dashboard/api/revenue-trend/?days=30</code>
+                        
+                        <h6 class="mt-3">Risk Distribution</h6>
+                        <code>GET /dashboard/api/risk-distribution/</code>
+                        
+                        <h6 class="mt-3">Product Forecast</h6>
+                        <code>GET /dashboard/api/product-forecast/&lt;sku&gt;/</code>
+                        
+                        <p class="mt-3 text-muted">
+                            <i class="bi bi-info-circle"></i>
+                            These endpoints return data formatted for Chart.js
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Error Responses -->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h4>Error Responses</h4>
+                        
+                        <h6 class="mt-3">404 Not Found</h6>
+                        <div class="code-block">
+<pre>{
+    "status": "error",
+    "message": "Product not found"
+}</pre>
+                        </div>
+                        
+                        <h6 class="mt-4">500 Internal Server Error</h6>
+                        <div class="code-block">
+<pre>{
+    "status": "error",
+    "message": "Internal server error description"
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

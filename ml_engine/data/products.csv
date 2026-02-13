@@ -1,0 +1,501 @@
+product_id,product_name,category,subcategory,color,size,price,cost,season,launch_date
+SKU00000,Black Sneakers,Shoes,Sneakers,Green,S,45.13,18.84,Spring,2024-03-22 23:48:11.841483
+SKU00001,Black Jackets,Outerwear,Jackets,White,S,46.41,20.41,Spring,2024-03-14 23:48:11.841511
+SKU00002,Red Heels,Shoes,Heels,Pink,XL,52.56,28.36,Spring,2024-10-06 23:48:11.841525
+SKU00003,Blue Evening Dresses,Dresses,Evening Dresses,Red,M,28.8,13.59,Winter,2024-11-07 23:48:11.841536
+SKU00004,Green Summer Dresses,Dresses,Summer Dresses,Black,XXL,77.02,32.02,Spring,2024-06-16 23:48:11.841545
+SKU00005,Grey Summer Dresses,Dresses,Summer Dresses,Red,XXL,24.39,14.56,Summer,2024-07-31 23:48:11.841554
+SKU00006,Brown Jeans,Bottoms,Jeans,Green,L,100.82,47.79,Fall,2024-10-04 23:48:11.841562
+SKU00007,White Skirts,Bottoms,Skirts,Blue,XL,113.43,53.98,Summer,2024-05-04 23:48:11.841571
+SKU00008,Grey Boots,Shoes,Boots,Black,S,125.94,57.12,Fall,2024-06-04 23:48:11.841580
+SKU00009,Red Skirts,Bottoms,Skirts,Pink,L,134.43,60.89,Winter,2024-10-14 23:48:11.841588
+SKU00010,Brown Skirts,Bottoms,Skirts,Brown,M,44.61,22.25,Summer,2024-04-10 23:48:11.841597
+SKU00011,Blue T-shirts,Tops,T-shirts,Blue,XXL,71.99,34.29,Spring,2024-06-12 23:48:11.841605
+SKU00012,Green Blazers,Outerwear,Blazers,Black,XXL,112.3,52.56,Fall,2024-02-02 23:48:11.841624
+SKU00013,Blue Evening Dresses,Dresses,Evening Dresses,Pink,XS,143.77,79.42,Fall,2024-04-14 23:48:11.841653
+SKU00014,Green Bags,Accessories,Bags,Red,S,65.48,38.68,Summer,2024-03-25 23:48:11.841674
+SKU00015,Grey Bags,Accessories,Bags,Pink,XS,30.1,13.48,Fall,2024-07-22 23:48:11.841683
+SKU00016,White Jeans,Bottoms,Jeans,Pink,XS,147.03,78.21,Summer,2024-10-22 23:48:11.841692
+SKU00017,Green Scarves,Accessories,Scarves,Brown,S,140.4,67.36,Summer,2024-07-20 23:48:11.841700
+SKU00018,Pink Sandals,Shoes,Sandals,Pink,XS,48.47,19.59,Spring,2024-07-06 23:48:11.841709
+SKU00019,Red Scarves,Accessories,Scarves,Black,XS,110.56,45.71,Spring,2024-08-31 23:48:11.841717
+SKU00020,White Sweaters,Tops,Sweaters,Red,M,105.31,44.91,Summer,2024-03-25 23:48:11.841725
+SKU00021,Red Jewelry,Accessories,Jewelry,Pink,L,40.71,19.17,Spring,2024-05-20 23:48:11.841734
+SKU00022,Black Coats,Outerwear,Coats,White,XS,69.35,31.19,Fall,2024-11-01 23:48:11.841743
+SKU00023,Blue Shorts,Bottoms,Shorts,Brown,S,52.6,25.7,Summer,2024-11-18 23:48:11.841773
+SKU00024,Black Bags,Accessories,Bags,Black,XS,140.06,67.41,Summer,2024-10-02 23:48:11.841791
+SKU00025,Brown Jackets,Outerwear,Jackets,Black,S,66.16,38.72,Winter,2024-08-13 23:48:11.841817
+SKU00026,Brown Coats,Outerwear,Coats,Pink,S,40.64,20.96,Summer,2024-11-27 23:48:11.841827
+SKU00027,Grey Bags,Accessories,Bags,Black,XS,93.86,55.58,Summer,2024-11-27 23:48:11.841836
+SKU00028,White Blouses,Tops,Blouses,White,XXL,131.35,77.28,Winter,2024-10-26 23:48:11.841844
+SKU00029,Black Scarves,Accessories,Scarves,White,L,103.75,45.74,Fall,2024-08-15 23:48:11.841852
+SKU00030,Red Sandals,Shoes,Sandals,Green,L,32.67,15.13,Fall,2024-05-06 23:48:11.841859
+SKU00031,Pink T-shirts,Tops,T-shirts,White,XS,87.58,51.38,Fall,2024-10-20 23:48:11.841867
+SKU00032,Grey Blouses,Tops,Blouses,Green,S,74.15,44.25,Fall,2024-02-17 23:48:11.841875
+SKU00033,Green Sneakers,Shoes,Sneakers,White,S,50.7,21.86,Spring,2024-03-18 23:48:11.841883
+SKU00034,Red Summer Dresses,Dresses,Summer Dresses,Grey,S,107.81,53.66,Fall,2024-04-12 23:48:11.841891
+SKU00035,Brown T-shirts,Tops,T-shirts,Green,XS,15.48,9.23,Summer,2024-02-04 23:48:11.841903
+SKU00036,Brown Shorts,Bottoms,Shorts,Black,XS,25.16,10.25,Summer,2024-03-22 23:48:11.841912
+SKU00037,Blue Summer Dresses,Dresses,Summer Dresses,Brown,S,20.65,11.97,Fall,2024-12-06 23:48:11.841919
+SKU00038,White Trousers,Bottoms,Trousers,Grey,XL,134.36,73.88,Winter,2024-02-13 23:48:11.841928
+SKU00039,Blue Trousers,Bottoms,Trousers,Brown,XS,39.21,21.98,Fall,2024-05-30 23:48:11.841937
+SKU00040,Green Boots,Shoes,Boots,Blue,XXL,29.59,13.15,Spring,2024-04-30 23:48:11.841947
+SKU00041,Green Coats,Outerwear,Coats,Red,S,18.19,8.47,Summer,2024-06-05 23:48:11.841955
+SKU00042,Grey Sweaters,Tops,Sweaters,Brown,XXL,147.46,62.39,Fall,2024-12-12 23:48:11.841963
+SKU00043,Green Casual Dresses,Dresses,Casual Dresses,Black,XS,95.54,46.55,Fall,2024-07-19 23:48:11.841971
+SKU00044,Brown Bags,Accessories,Bags,Red,M,20.99,10.58,Winter,2024-12-26 23:48:11.841979
+SKU00045,Grey Scarves,Accessories,Scarves,Brown,XS,143.1,66.22,Fall,2024-02-11 23:48:11.841987
+SKU00046,Green Sweaters,Tops,Sweaters,Brown,M,69.32,29.49,Fall,2024-03-18 23:48:11.841995
+SKU00047,Brown Blazers,Outerwear,Blazers,Blue,XL,91.83,52.04,Winter,2024-03-21 23:48:11.842003
+SKU00048,Red Evening Dresses,Dresses,Evening Dresses,Brown,XL,96.9,47.32,Fall,2024-05-02 23:48:11.842011
+SKU00049,Pink Boots,Shoes,Boots,Blue,XXL,26.45,14.91,Fall,2024-11-09 23:48:11.842019
+SKU00050,Red Skirts,Bottoms,Skirts,Red,S,18.3,9.56,Summer,2024-04-27 23:48:11.842026
+SKU00051,Brown Shirts,Tops,Shirts,Red,XXL,109.01,48.92,Winter,2024-06-05 23:48:11.842034
+SKU00052,White Sneakers,Shoes,Sneakers,Brown,S,38.74,19.81,Winter,2024-12-01 23:48:11.842042
+SKU00053,Blue Shirts,Tops,Shirts,Pink,XXL,86.7,45.3,Fall,2024-05-14 23:48:11.842051
+SKU00054,Pink Heels,Shoes,Heels,Blue,XXL,131.3,72.26,Winter,2024-08-16 23:48:11.842059
+SKU00055,Pink Sandals,Shoes,Sandals,Red,M,74.38,33.79,Fall,2024-08-28 23:48:11.842067
+SKU00056,White Summer Dresses,Dresses,Summer Dresses,Blue,S,46.22,19.08,Summer,2024-09-08 23:48:11.842081
+SKU00057,Pink Coats,Outerwear,Coats,Brown,XS,42.92,24.94,Winter,2024-06-10 23:48:11.842089
+SKU00058,Brown Bags,Accessories,Bags,Pink,XS,142.27,81.19,Fall,2024-06-10 23:48:11.842097
+SKU00059,Red Blazers,Outerwear,Blazers,Pink,S,51.85,24.77,Winter,2024-12-12 23:48:11.842105
+SKU00060,Blue Heels,Shoes,Heels,Pink,S,147.4,76.41,Spring,2024-06-08 23:48:11.842115
+SKU00061,White Sneakers,Shoes,Sneakers,Brown,S,132.02,59.68,Summer,2024-12-01 23:48:11.842123
+SKU00062,Pink Casual Dresses,Dresses,Casual Dresses,Grey,M,117.77,64.82,Winter,2024-08-06 23:48:11.842130
+SKU00063,White Coats,Outerwear,Coats,Pink,XS,116.12,51.66,Spring,2024-06-30 23:48:11.842138
+SKU00064,Black T-shirts,Tops,T-shirts,Red,S,128.3,54.56,Summer,2024-08-26 23:48:11.842145
+SKU00065,Red Sneakers,Shoes,Sneakers,Pink,XXL,49.59,25.85,Fall,2024-10-02 23:48:11.842154
+SKU00066,Blue Sneakers,Shoes,Sneakers,Green,XS,93.12,49.86,Fall,2024-03-07 23:48:11.842162
+SKU00067,Red Coats,Outerwear,Coats,White,XL,108.23,58.38,Summer,2024-11-04 23:48:11.842170
+SKU00068,White Summer Dresses,Dresses,Summer Dresses,Black,M,86.92,43.56,Fall,2024-11-21 23:48:11.842178
+SKU00069,Brown Casual Dresses,Dresses,Casual Dresses,Pink,XS,73.53,42.52,Fall,2024-02-05 23:48:11.842186
+SKU00070,Blue Blazers,Outerwear,Blazers,Brown,S,114.06,64.06,Fall,2024-02-15 23:48:11.842193
+SKU00071,Pink Jewelry,Accessories,Jewelry,Brown,XXL,94.98,53.77,Fall,2024-08-23 23:48:11.842203
+SKU00072,Pink Sweaters,Tops,Sweaters,Red,L,91.93,37.3,Winter,2024-07-07 23:48:11.842211
+SKU00073,Pink Casual Dresses,Dresses,Casual Dresses,Red,M,122.71,70.69,Fall,2024-08-05 23:48:11.842219
+SKU00074,Black Sandals,Shoes,Sandals,Red,XS,47.58,24.32,Winter,2024-04-20 23:48:11.842226
+SKU00075,Pink Shorts,Bottoms,Shorts,Pink,XS,27.56,14.84,Summer,2024-06-02 23:48:11.842234
+SKU00076,Grey Summer Dresses,Dresses,Summer Dresses,Pink,XL,86.67,40.4,Winter,2024-03-20 23:48:11.842241
+SKU00077,Green Heels,Shoes,Heels,Green,M,46.12,19.55,Summer,2024-07-18 23:48:11.842253
+SKU00078,Red Scarves,Accessories,Scarves,Red,XXL,80.37,45.53,Fall,2024-11-05 23:48:11.842262
+SKU00079,Grey Casual Dresses,Dresses,Casual Dresses,Blue,M,16.91,6.92,Summer,2024-08-08 23:48:11.842272
+SKU00080,Blue Sweaters,Tops,Sweaters,Pink,XS,132.82,65.84,Fall,2024-04-30 23:48:11.842280
+SKU00081,Black Casual Dresses,Dresses,Casual Dresses,Green,L,30.4,15.15,Spring,2024-06-04 23:48:11.842288
+SKU00082,Blue Bags,Accessories,Bags,Blue,XL,143.13,60.64,Spring,2024-08-21 23:48:11.842295
+SKU00083,Red Blazers,Outerwear,Blazers,Brown,L,137.65,82.32,Fall,2024-02-29 23:48:11.842303
+SKU00084,Black Summer Dresses,Dresses,Summer Dresses,White,S,99.44,42.9,Fall,2024-11-15 23:48:11.842311
+SKU00085,Blue Jeans,Bottoms,Jeans,Black,L,75.82,30.82,Winter,2024-07-30 23:48:11.842319
+SKU00086,Green Summer Dresses,Dresses,Summer Dresses,Pink,XS,107.8,55.84,Fall,2024-02-10 23:48:11.842326
+SKU00087,White Shorts,Bottoms,Shorts,Red,XXL,35.11,14.55,Fall,2024-10-15 23:48:11.842334
+SKU00088,Green Skirts,Bottoms,Skirts,Pink,XS,78.27,46.06,Fall,2024-06-03 23:48:11.842342
+SKU00089,Pink Jewelry,Accessories,Jewelry,White,XL,20.38,10.61,Winter,2024-07-14 23:48:11.842350
+SKU00090,Red T-shirts,Tops,T-shirts,Black,XXL,125.89,62.2,Spring,2024-09-28 23:48:11.842358
+SKU00091,Green Heels,Shoes,Heels,Blue,XL,73.84,36.48,Winter,2024-11-10 23:48:11.842365
+SKU00092,Grey Coats,Outerwear,Coats,White,S,59.52,31.7,Winter,2024-08-01 23:48:11.842373
+SKU00093,Black Blazers,Outerwear,Blazers,Pink,XS,57.46,34.13,Fall,2024-10-28 23:48:11.842381
+SKU00094,Black Blazers,Outerwear,Blazers,Pink,L,22.32,12.3,Fall,2024-02-12 23:48:11.842389
+SKU00095,Black Heels,Shoes,Heels,Red,M,89.14,51.36,Fall,2024-05-16 23:48:11.842397
+SKU00096,Black Jackets,Outerwear,Jackets,Red,XXL,36.38,17.52,Spring,2024-03-19 23:48:11.842404
+SKU00097,Pink Jeans,Bottoms,Jeans,White,XXL,127.34,63.9,Winter,2024-07-30 23:48:11.842412
+SKU00098,Pink Evening Dresses,Dresses,Evening Dresses,Pink,S,76.67,33.59,Summer,2024-06-13 23:48:11.842420
+SKU00099,White Scarves,Accessories,Scarves,Green,L,60.88,27.8,Fall,2024-12-25 23:48:11.842433
+SKU00100,Pink Summer Dresses,Dresses,Summer Dresses,Blue,L,87.71,44.77,Fall,2024-07-09 23:48:11.842441
+SKU00101,Pink Jewelry,Accessories,Jewelry,Grey,S,147.4,70.25,Summer,2024-03-09 23:48:11.842448
+SKU00102,Grey Jackets,Outerwear,Jackets,Pink,XXL,138.31,82.67,Winter,2024-06-12 23:48:11.842456
+SKU00103,Pink Boots,Shoes,Boots,Black,S,82.81,47.6,Fall,2024-11-05 23:48:11.842464
+SKU00104,Pink Jackets,Outerwear,Jackets,Black,XXL,34.46,17.02,Summer,2024-11-18 23:48:11.842472
+SKU00105,Brown Evening Dresses,Dresses,Evening Dresses,White,M,130.07,68.33,Winter,2024-07-17 23:48:11.842480
+SKU00106,Black Blazers,Outerwear,Blazers,White,S,100.21,55.05,Fall,2024-09-01 23:48:11.842488
+SKU00107,White Jackets,Outerwear,Jackets,Pink,S,108.69,50.53,Spring,2024-12-03 23:48:11.842496
+SKU00108,Grey Sweaters,Tops,Sweaters,Grey,L,34.65,18.58,Winter,2024-03-12 23:48:11.842503
+SKU00109,Blue Trousers,Bottoms,Trousers,White,XL,132.56,77.22,Summer,2024-04-16 23:48:11.842512
+SKU00110,Pink Trousers,Bottoms,Trousers,Green,L,49.47,28.7,Spring,2024-05-02 23:48:11.842519
+SKU00111,White Boots,Shoes,Boots,Pink,M,148.33,87.87,Fall,2024-02-03 23:48:11.842527
+SKU00112,Pink Sandals,Shoes,Sandals,Green,S,149.92,67.08,Winter,2024-11-02 23:48:11.842534
+SKU00113,Green Belts,Accessories,Belts,Green,XS,147.02,59.05,Winter,2024-08-08 23:48:11.842542
+SKU00114,Pink Sneakers,Shoes,Sneakers,Green,S,96.95,51.12,Fall,2024-09-05 23:48:11.842550
+SKU00115,Blue Belts,Accessories,Belts,White,XXL,102.26,41.59,Fall,2024-05-15 23:48:11.842558
+SKU00116,Blue Summer Dresses,Dresses,Summer Dresses,White,M,59.11,26.02,Winter,2024-09-28 23:48:11.842566
+SKU00117,Green Belts,Accessories,Belts,Blue,M,138.4,76.02,Winter,2024-07-28 23:48:11.842575
+SKU00118,Pink Casual Dresses,Dresses,Casual Dresses,White,S,116.81,69.32,Summer,2024-06-06 23:48:11.842586
+SKU00119,White Belts,Accessories,Belts,Brown,XS,50.7,24.02,Spring,2024-05-08 23:48:11.842594
+SKU00120,Brown Sandals,Shoes,Sandals,Grey,XS,106.1,55.59,Winter,2024-12-14 23:48:11.842604
+SKU00121,Red Belts,Accessories,Belts,White,XXL,126.22,53.43,Fall,2024-05-31 23:48:11.842612
+SKU00122,Green T-shirts,Tops,T-shirts,Pink,XS,28.12,13.8,Summer,2024-06-11 23:48:11.842620
+SKU00123,Blue Heels,Shoes,Heels,Brown,XXL,28.37,13.66,Winter,2024-02-15 23:48:11.842628
+SKU00124,Grey Casual Dresses,Dresses,Casual Dresses,Red,L,75.03,31.5,Summer,2024-06-24 23:48:11.842636
+SKU00125,Grey Sandals,Shoes,Sandals,Black,L,52.24,21.85,Spring,2024-05-08 23:48:11.842644
+SKU00126,Black Jeans,Bottoms,Jeans,Grey,S,148.49,84.04,Summer,2024-11-21 23:48:11.842652
+SKU00127,Red Scarves,Accessories,Scarves,Red,M,119.54,68.34,Spring,2024-08-07 23:48:11.842660
+SKU00128,Green Trousers,Bottoms,Trousers,Blue,XS,104.24,42.01,Spring,2024-10-20 23:48:11.842667
+SKU00129,Black Skirts,Bottoms,Skirts,Blue,M,22.07,9.33,Winter,2024-04-01 23:48:11.842676
+SKU00130,Pink Shirts,Tops,Shirts,Grey,XL,95.14,42.27,Winter,2024-04-13 23:48:11.842683
+SKU00131,Green Bags,Accessories,Bags,Pink,XXL,145.14,82.65,Spring,2024-04-25 23:48:11.842691
+SKU00132,White Blazers,Outerwear,Blazers,Pink,XXL,137.81,64.0,Spring,2024-11-15 23:48:11.842699
+SKU00133,Blue Jeans,Bottoms,Jeans,Green,XL,100.47,60.17,Fall,2024-06-14 23:48:11.842707
+SKU00134,Pink Belts,Accessories,Belts,Brown,XS,122.07,66.43,Spring,2024-03-19 23:48:11.842714
+SKU00135,Pink Shorts,Bottoms,Shorts,Red,L,60.76,29.36,Winter,2024-06-05 23:48:11.842722
+SKU00136,Brown Sweaters,Tops,Sweaters,Grey,XXL,49.41,20.43,Summer,2024-04-28 23:48:11.842730
+SKU00137,Brown T-shirts,Tops,T-shirts,White,XXL,114.74,47.27,Summer,2024-03-17 23:48:11.842738
+SKU00138,White Belts,Accessories,Belts,Brown,M,132.94,78.92,Winter,2024-11-30 23:48:11.842748
+SKU00139,Grey Belts,Accessories,Belts,White,XL,83.5,37.14,Summer,2024-04-24 23:48:11.842756
+SKU00140,Grey Sweaters,Tops,Sweaters,White,M,92.5,55.03,Winter,2024-03-14 23:48:11.842763
+SKU00141,Green Bags,Accessories,Bags,Black,S,51.89,24.4,Fall,2024-07-06 23:48:11.842774
+SKU00142,Brown Trousers,Bottoms,Trousers,White,S,115.03,63.18,Spring,2024-11-10 23:48:11.842782
+SKU00143,Brown Shorts,Bottoms,Shorts,Pink,M,36.25,20.13,Fall,2024-07-13 23:48:11.842789
+SKU00144,Black Bags,Accessories,Bags,Blue,S,116.85,53.1,Spring,2024-11-15 23:48:11.842797
+SKU00145,Pink Heels,Shoes,Heels,Pink,L,51.88,25.21,Spring,2024-07-03 23:48:11.842805
+SKU00146,Pink Summer Dresses,Dresses,Summer Dresses,Green,XS,44.77,19.74,Spring,2024-12-23 23:48:11.842813
+SKU00147,Green Trousers,Bottoms,Trousers,Green,M,31.2,13.58,Winter,2024-05-20 23:48:11.842820
+SKU00148,Red Blazers,Outerwear,Blazers,Grey,XS,68.6,27.7,Spring,2024-05-17 23:48:11.842828
+SKU00149,Brown Sweaters,Tops,Sweaters,Brown,XXL,101.42,48.78,Fall,2024-10-29 23:48:11.842837
+SKU00150,Pink Casual Dresses,Dresses,Casual Dresses,Grey,XS,73.96,36.03,Spring,2024-08-24 23:48:11.842845
+SKU00151,White Blazers,Outerwear,Blazers,Brown,M,115.68,64.3,Summer,2024-07-09 23:48:11.842853
+SKU00152,Red T-shirts,Tops,T-shirts,Grey,M,113.2,47.61,Summer,2024-08-28 23:48:11.842861
+SKU00153,Blue Casual Dresses,Dresses,Casual Dresses,Blue,XXL,25.17,13.87,Winter,2024-05-03 23:48:11.842868
+SKU00154,Grey Jewelry,Accessories,Jewelry,Grey,S,74.37,39.14,Winter,2024-05-14 23:48:11.842877
+SKU00155,Black Summer Dresses,Dresses,Summer Dresses,Grey,XL,25.02,10.2,Winter,2024-05-09 23:48:11.842886
+SKU00156,White Evening Dresses,Dresses,Evening Dresses,White,XL,95.2,49.13,Winter,2024-05-04 23:48:11.842895
+SKU00157,Pink Sneakers,Shoes,Sneakers,Red,M,96.68,47.38,Summer,2024-11-25 23:48:11.842905
+SKU00158,White Summer Dresses,Dresses,Summer Dresses,Blue,XS,48.45,24.46,Winter,2024-05-16 23:48:11.842913
+SKU00159,Grey Scarves,Accessories,Scarves,Grey,M,67.3,27.62,Fall,2024-02-24 23:48:11.842921
+SKU00160,White Sandals,Shoes,Sandals,Grey,XS,90.33,40.68,Winter,2024-08-03 23:48:11.842929
+SKU00161,Grey Boots,Shoes,Boots,White,XL,104.59,62.08,Fall,2024-07-21 23:48:11.842936
+SKU00162,Blue Heels,Shoes,Heels,White,M,90.45,48.3,Fall,2024-10-22 23:48:11.842946
+SKU00163,Brown Sneakers,Shoes,Sneakers,Grey,XS,63.95,29.95,Summer,2024-09-08 23:48:11.842955
+SKU00164,Red Jackets,Outerwear,Jackets,Blue,S,25.42,14.09,Spring,2024-04-11 23:48:11.842963
+SKU00165,Grey Sneakers,Shoes,Sneakers,Blue,XL,65.86,37.29,Summer,2024-09-25 23:48:11.842970
+SKU00166,Pink Scarves,Accessories,Scarves,Black,L,64.18,33.51,Summer,2024-05-13 23:48:11.842978
+SKU00167,Red Heels,Shoes,Heels,Red,M,145.36,68.84,Winter,2024-09-18 23:48:11.842986
+SKU00168,Pink Jewelry,Accessories,Jewelry,Green,L,82.89,46.7,Winter,2024-10-05 23:48:11.842994
+SKU00169,Green Scarves,Accessories,Scarves,Black,XXL,79.88,46.88,Fall,2024-03-18 23:48:11.843001
+SKU00170,Green Sneakers,Shoes,Sneakers,White,S,51.83,21.68,Summer,2024-05-17 23:48:11.843009
+SKU00171,Grey Shorts,Bottoms,Shorts,Black,L,22.19,10.59,Fall,2024-08-28 23:48:11.843017
+SKU00172,Red Sweaters,Tops,Sweaters,Black,M,140.66,60.13,Fall,2024-10-13 23:48:11.843025
+SKU00173,Blue Evening Dresses,Dresses,Evening Dresses,Pink,L,98.07,44.25,Spring,2024-12-17 23:48:11.843034
+SKU00174,White Shorts,Bottoms,Shorts,Green,S,55.66,26.94,Spring,2024-08-26 23:48:11.843042
+SKU00175,White Jewelry,Accessories,Jewelry,White,L,95.56,48.07,Spring,2024-02-07 23:48:11.843049
+SKU00176,Green Trousers,Bottoms,Trousers,Brown,XS,98.0,47.36,Summer,2024-03-09 23:48:11.843057
+SKU00177,Grey Sneakers,Shoes,Sneakers,White,XL,88.45,50.83,Spring,2024-06-10 23:48:11.843067
+SKU00178,Grey Shirts,Tops,Shirts,Green,XXL,17.19,7.7,Spring,2024-07-03 23:48:11.843075
+SKU00179,Grey Sneakers,Shoes,Sneakers,Blue,XS,62.56,27.21,Fall,2024-02-01 23:48:11.843083
+SKU00180,Pink Heels,Shoes,Heels,Blue,S,23.52,10.79,Winter,2024-12-08 23:48:11.843091
+SKU00181,Black Blouses,Tops,Blouses,Grey,M,84.58,34.45,Winter,2024-08-19 23:48:11.843099
+SKU00182,Green Boots,Shoes,Boots,Grey,XS,131.88,56.04,Fall,2024-08-09 23:48:11.843106
+SKU00183,Brown Evening Dresses,Dresses,Evening Dresses,Pink,L,60.77,32.72,Summer,2024-04-16 23:48:11.843116
+SKU00184,Green Summer Dresses,Dresses,Summer Dresses,White,XXL,72.31,43.32,Winter,2024-02-22 23:48:11.843126
+SKU00185,Grey Skirts,Bottoms,Skirts,White,XS,59.27,28.99,Fall,2024-07-23 23:48:11.843134
+SKU00186,Blue Heels,Shoes,Heels,Pink,M,75.36,45.19,Fall,2024-02-16 23:48:11.843141
+SKU00187,Black Summer Dresses,Dresses,Summer Dresses,White,XXL,101.06,56.62,Fall,2024-04-08 23:48:11.843149
+SKU00188,Black Boots,Shoes,Boots,Blue,XL,106.54,45.31,Winter,2024-12-09 23:48:11.843156
+SKU00189,Grey Skirts,Bottoms,Skirts,Brown,XL,19.37,11.42,Summer,2024-05-10 23:48:11.843164
+SKU00190,White Evening Dresses,Dresses,Evening Dresses,Blue,XL,64.54,29.04,Fall,2024-08-06 23:48:11.843176
+SKU00191,Blue T-shirts,Tops,T-shirts,Pink,XL,67.24,37.32,Spring,2024-08-14 23:48:11.843184
+SKU00192,Red Heels,Shoes,Heels,Green,XXL,138.72,58.89,Winter,2024-09-15 23:48:11.843192
+SKU00193,Blue Shirts,Tops,Shirts,Pink,XS,124.42,67.42,Fall,2024-07-02 23:48:11.843200
+SKU00194,Green Belts,Accessories,Belts,Blue,XXL,110.79,55.59,Summer,2024-06-24 23:48:11.843207
+SKU00195,Blue Blouses,Tops,Blouses,Red,L,18.55,10.4,Fall,2024-05-01 23:48:11.843215
+SKU00196,White Scarves,Accessories,Scarves,White,M,68.75,33.15,Winter,2024-04-01 23:48:11.843226
+SKU00197,White Blazers,Outerwear,Blazers,Blue,M,101.72,54.52,Winter,2024-05-02 23:48:11.843234
+SKU00198,Blue Casual Dresses,Dresses,Casual Dresses,Blue,L,82.89,41.75,Spring,2024-10-24 23:48:11.843242
+SKU00199,Blue Casual Dresses,Dresses,Casual Dresses,Grey,XXL,45.44,20.45,Fall,2024-11-16 23:48:11.843250
+SKU00200,Blue Sandals,Shoes,Sandals,Green,XL,87.02,51.2,Summer,2024-02-27 23:48:11.843258
+SKU00201,Grey Trousers,Bottoms,Trousers,Black,XS,25.97,14.37,Fall,2024-09-10 23:48:11.843267
+SKU00202,Black Blazers,Outerwear,Blazers,Pink,XXL,88.65,39.8,Fall,2024-04-23 23:48:11.843275
+SKU00203,Green Heels,Shoes,Heels,Pink,XS,107.96,52.16,Summer,2024-05-15 23:48:11.843282
+SKU00204,Grey Jackets,Outerwear,Jackets,Blue,M,131.3,78.13,Fall,2024-07-03 23:48:11.843290
+SKU00205,White Skirts,Bottoms,Skirts,Grey,S,77.97,35.05,Fall,2024-05-10 23:48:11.843304
+SKU00206,Green T-shirts,Tops,T-shirts,Brown,XL,71.45,41.92,Summer,2024-07-12 23:48:11.843312
+SKU00207,Red Sandals,Shoes,Sandals,Blue,L,149.46,86.06,Winter,2024-04-15 23:48:11.843320
+SKU00208,White Jackets,Outerwear,Jackets,Brown,XL,76.73,39.64,Summer,2024-09-07 23:48:11.843327
+SKU00209,Green T-shirts,Tops,T-shirts,Pink,XL,134.12,68.04,Winter,2024-08-02 23:48:11.843335
+SKU00210,Blue Shirts,Tops,Shirts,Green,XXL,64.38,26.33,Winter,2024-06-22 23:48:11.843343
+SKU00211,Grey Blouses,Tops,Blouses,Green,XS,67.16,30.62,Winter,2024-03-20 23:48:11.843350
+SKU00212,Blue Bags,Accessories,Bags,White,L,65.38,38.43,Fall,2024-03-16 23:48:11.843358
+SKU00213,Brown Trousers,Bottoms,Trousers,Black,XS,20.25,10.2,Fall,2024-04-28 23:48:11.843366
+SKU00214,Grey Trousers,Bottoms,Trousers,Grey,S,68.05,31.8,Fall,2024-02-27 23:48:11.843375
+SKU00215,Green Jewelry,Accessories,Jewelry,Pink,XS,64.73,33.45,Spring,2024-05-27 23:48:11.843382
+SKU00216,Pink Sneakers,Shoes,Sneakers,Green,XXL,120.69,62.36,Summer,2024-11-30 23:48:11.843393
+SKU00217,Blue Shorts,Bottoms,Shorts,Red,XS,92.3,37.27,Spring,2024-09-20 23:48:11.843401
+SKU00218,Blue Evening Dresses,Dresses,Evening Dresses,Brown,XXL,42.53,23.02,Winter,2024-11-25 23:48:11.843409
+SKU00219,Grey Scarves,Accessories,Scarves,Pink,XL,65.87,38.36,Summer,2024-05-05 23:48:11.843417
+SKU00220,Grey Summer Dresses,Dresses,Summer Dresses,Green,XL,80.36,41.11,Summer,2024-08-06 23:48:11.843425
+SKU00221,Green Skirts,Bottoms,Skirts,Red,XXL,110.17,51.75,Fall,2024-04-25 23:48:11.843432
+SKU00222,Green Sandals,Shoes,Sandals,White,XL,106.34,59.94,Winter,2024-06-07 23:48:11.843440
+SKU00223,Black Skirts,Bottoms,Skirts,Green,XXL,25.67,14.1,Winter,2024-08-17 23:48:11.843448
+SKU00224,Green Trousers,Bottoms,Trousers,Green,S,29.75,12.2,Summer,2024-08-24 23:48:11.843456
+SKU00225,Red Scarves,Accessories,Scarves,Black,XS,70.8,37.97,Winter,2024-11-05 23:48:11.843464
+SKU00226,Blue Jeans,Bottoms,Jeans,Brown,XXL,141.23,74.87,Winter,2024-04-26 23:48:11.843476
+SKU00227,Green Evening Dresses,Dresses,Evening Dresses,Black,XS,103.06,56.45,Summer,2024-03-28 23:48:11.843484
+SKU00228,Brown Blouses,Tops,Blouses,Blue,XS,149.62,65.42,Winter,2024-04-17 23:48:11.843493
+SKU00229,Black Sandals,Shoes,Sandals,Black,M,91.67,41.89,Spring,2024-07-08 23:48:11.843500
+SKU00230,Blue Heels,Shoes,Heels,Pink,M,41.03,17.75,Spring,2024-07-10 23:48:11.843508
+SKU00231,Green Blazers,Outerwear,Blazers,Blue,XS,114.44,61.21,Fall,2024-03-11 23:48:11.843516
+SKU00232,Brown Trousers,Bottoms,Trousers,Brown,XL,59.27,25.9,Winter,2024-11-08 23:48:11.843523
+SKU00233,Grey Shorts,Bottoms,Shorts,Red,XS,50.21,27.65,Summer,2024-05-12 23:48:11.843532
+SKU00234,Black Evening Dresses,Dresses,Evening Dresses,Green,XXL,63.54,33.9,Summer,2024-11-25 23:48:11.843540
+SKU00235,Blue Coats,Outerwear,Coats,Brown,XXL,82.84,43.72,Fall,2024-10-27 23:48:11.843550
+SKU00236,Red Evening Dresses,Dresses,Evening Dresses,Red,S,79.55,37.76,Winter,2024-02-20 23:48:11.843558
+SKU00237,Red Heels,Shoes,Heels,Red,XXL,116.89,57.2,Spring,2024-04-01 23:48:11.843567
+SKU00238,White Sandals,Shoes,Sandals,White,XS,126.88,64.37,Summer,2024-03-08 23:48:11.843574
+SKU00239,Pink Skirts,Bottoms,Skirts,White,XXL,42.73,24.77,Winter,2024-11-10 23:48:11.843582
+SKU00240,Pink Jackets,Outerwear,Jackets,Blue,XL,71.08,35.01,Spring,2024-03-15 23:48:11.843592
+SKU00241,Black Summer Dresses,Dresses,Summer Dresses,Brown,M,125.22,51.92,Summer,2024-03-05 23:48:11.843599
+SKU00242,White Coats,Outerwear,Coats,Black,XS,148.13,67.76,Winter,2024-12-10 23:48:11.843607
+SKU00243,Brown Trousers,Bottoms,Trousers,Grey,L,75.55,31.43,Winter,2024-06-17 23:48:11.843615
+SKU00244,Grey Boots,Shoes,Boots,White,S,149.03,63.41,Winter,2024-03-31 23:48:11.843623
+SKU00245,Black Jeans,Bottoms,Jeans,Green,L,105.92,50.4,Winter,2024-03-29 23:48:11.843631
+SKU00246,Pink Trousers,Bottoms,Trousers,Grey,S,52.21,29.34,Spring,2024-12-10 23:48:11.843641
+SKU00247,Black Blazers,Outerwear,Blazers,Red,S,24.08,12.51,Spring,2024-05-12 23:48:11.843650
+SKU00248,Red Sneakers,Shoes,Sneakers,Black,L,74.26,31.79,Summer,2024-11-28 23:48:11.843659
+SKU00249,Grey Casual Dresses,Dresses,Casual Dresses,Grey,S,55.74,24.76,Summer,2024-04-04 23:48:11.843667
+SKU00250,Black Evening Dresses,Dresses,Evening Dresses,Blue,XXL,106.63,63.39,Winter,2024-12-02 23:48:11.843675
+SKU00251,Grey Heels,Shoes,Heels,Brown,L,35.14,19.36,Winter,2024-09-23 23:48:11.843683
+SKU00252,Red Jackets,Outerwear,Jackets,Green,XXL,34.49,17.68,Winter,2024-11-27 23:48:11.843690
+SKU00253,Blue Blazers,Outerwear,Blazers,Brown,S,49.42,28.88,Fall,2024-11-16 23:48:11.843698
+SKU00254,Red Casual Dresses,Dresses,Casual Dresses,Black,M,65.92,28.85,Spring,2024-11-19 23:48:11.843706
+SKU00255,Pink Scarves,Accessories,Scarves,Red,M,55.93,32.86,Spring,2024-09-09 23:48:11.843716
+SKU00256,Pink Sneakers,Shoes,Sneakers,Red,XXL,96.59,56.31,Summer,2024-06-06 23:48:11.843724
+SKU00257,Green Belts,Accessories,Belts,Brown,L,87.04,39.37,Fall,2024-07-22 23:48:11.843732
+SKU00258,Pink Jewelry,Accessories,Jewelry,White,XXL,78.38,37.16,Fall,2024-09-13 23:48:11.843740
+SKU00259,Red Jackets,Outerwear,Jackets,Blue,XS,50.2,21.61,Winter,2024-07-28 23:48:11.843748
+SKU00260,Brown Casual Dresses,Dresses,Casual Dresses,Red,L,89.34,49.38,Fall,2024-08-17 23:48:11.843756
+SKU00261,Pink Blazers,Outerwear,Blazers,Pink,S,113.92,48.76,Fall,2024-10-01 23:48:11.843763
+SKU00262,Blue Jewelry,Accessories,Jewelry,Black,XL,19.57,10.82,Spring,2024-12-02 23:48:11.843771
+SKU00263,Red Jackets,Outerwear,Jackets,White,XXL,35.39,17.38,Summer,2024-04-12 23:48:11.843779
+SKU00264,Pink Shirts,Tops,Shirts,Black,XS,86.85,35.03,Winter,2024-12-20 23:48:11.843787
+SKU00265,Green Sandals,Shoes,Sandals,Black,XL,124.78,52.58,Winter,2024-09-26 23:48:11.843795
+SKU00266,Red Blouses,Tops,Blouses,Red,XL,86.07,48.11,Fall,2024-08-12 23:48:11.843802
+SKU00267,Brown Sweaters,Tops,Sweaters,Pink,XL,47.83,25.68,Summer,2024-07-26 23:48:11.843810
+SKU00268,White T-shirts,Tops,T-shirts,Brown,L,65.92,34.76,Winter,2024-11-28 23:48:11.843818
+SKU00269,White Boots,Shoes,Boots,Pink,L,102.06,60.77,Fall,2024-03-12 23:48:11.843829
+SKU00270,Red T-shirts,Tops,T-shirts,Red,XXL,134.82,55.18,Winter,2024-08-10 23:48:11.843837
+SKU00271,Black Sweaters,Tops,Sweaters,Blue,M,17.11,7.34,Summer,2024-03-01 23:48:11.843845
+SKU00272,White Heels,Shoes,Heels,Green,S,91.13,42.5,Winter,2024-03-25 23:48:11.843853
+SKU00273,White Boots,Shoes,Boots,Grey,XS,28.19,13.2,Summer,2024-11-18 23:48:11.843862
+SKU00274,Grey Jewelry,Accessories,Jewelry,Black,XXL,51.9,23.13,Winter,2024-04-19 23:48:11.843872
+SKU00275,Brown Jewelry,Accessories,Jewelry,Blue,XXL,94.09,52.17,Winter,2024-11-13 23:48:11.843879
+SKU00276,White Casual Dresses,Dresses,Casual Dresses,White,M,35.82,16.6,Summer,2024-06-10 23:48:11.843887
+SKU00277,Black T-shirts,Tops,T-shirts,Green,L,63.59,27.12,Fall,2024-11-04 23:48:11.843895
+SKU00278,Pink Shorts,Bottoms,Shorts,Brown,XS,18.55,7.77,Fall,2024-03-18 23:48:11.843902
+SKU00279,Brown Belts,Accessories,Belts,Black,M,70.86,41.17,Spring,2024-03-15 23:48:11.843910
+SKU00280,Brown Trousers,Bottoms,Trousers,Blue,S,51.3,22.02,Fall,2024-04-18 23:48:11.843918
+SKU00281,Green Shorts,Bottoms,Shorts,Brown,M,80.37,36.19,Spring,2024-06-25 23:48:11.843925
+SKU00282,Red Shorts,Bottoms,Shorts,Pink,XS,33.29,15.53,Spring,2024-06-07 23:48:11.843933
+SKU00283,Grey Jewelry,Accessories,Jewelry,Pink,M,73.13,33.94,Summer,2024-07-26 23:48:11.843941
+SKU00284,Pink Boots,Shoes,Boots,Grey,S,145.22,79.43,Fall,2024-07-30 23:48:11.843949
+SKU00285,Red Heels,Shoes,Heels,Grey,L,52.84,22.34,Winter,2024-06-23 23:48:11.843957
+SKU00286,Blue Scarves,Accessories,Scarves,Black,XXL,77.32,43.26,Summer,2024-05-16 23:48:11.843965
+SKU00287,Brown Sneakers,Shoes,Sneakers,Pink,S,100.5,53.44,Summer,2024-08-19 23:48:11.843972
+SKU00288,Brown Heels,Shoes,Heels,White,L,148.74,71.42,Winter,2024-03-03 23:48:11.843980
+SKU00289,Black Jewelry,Accessories,Jewelry,Grey,XXL,135.89,75.25,Spring,2024-11-01 23:48:11.843988
+SKU00290,Blue Sandals,Shoes,Sandals,Black,XL,147.79,87.66,Winter,2024-07-10 23:48:11.843998
+SKU00291,Black Jackets,Outerwear,Jackets,White,M,44.97,21.35,Summer,2024-05-12 23:48:11.844006
+SKU00292,Blue Blazers,Outerwear,Blazers,Grey,XS,80.17,46.83,Fall,2024-05-28 23:48:11.844014
+SKU00293,Blue T-shirts,Tops,T-shirts,Grey,M,61.31,30.45,Summer,2024-04-04 23:48:11.844022
+SKU00294,Pink Jackets,Outerwear,Jackets,Pink,M,24.07,9.74,Spring,2024-10-29 23:48:11.844032
+SKU00295,White Summer Dresses,Dresses,Summer Dresses,Blue,XXL,47.93,20.71,Summer,2024-03-19 23:48:11.844040
+SKU00296,Pink Jewelry,Accessories,Jewelry,Red,L,100.02,53.16,Summer,2024-02-03 23:48:11.844048
+SKU00297,Red Jackets,Outerwear,Jackets,Pink,XL,72.99,32.2,Spring,2024-09-08 23:48:11.844055
+SKU00298,White Sneakers,Shoes,Sneakers,Blue,M,59.01,26.7,Winter,2024-10-29 23:48:11.844063
+SKU00299,Grey Blazers,Outerwear,Blazers,Brown,XL,67.99,31.98,Spring,2024-07-01 23:48:11.844071
+SKU00300,Blue Blazers,Outerwear,Blazers,Green,XL,94.67,40.1,Summer,2024-07-19 23:48:11.844079
+SKU00301,Blue Casual Dresses,Dresses,Casual Dresses,Grey,XXL,34.08,17.7,Winter,2024-05-26 23:48:11.844087
+SKU00302,Brown Jewelry,Accessories,Jewelry,Blue,L,100.79,43.68,Summer,2024-03-17 23:48:11.844094
+SKU00303,Blue Casual Dresses,Dresses,Casual Dresses,Grey,L,98.62,49.01,Fall,2024-12-22 23:48:11.844102
+SKU00304,Pink Shorts,Bottoms,Shorts,Brown,XXL,81.38,35.27,Winter,2024-04-20 23:48:11.844110
+SKU00305,Red Bags,Accessories,Bags,Green,XS,52.11,28.98,Fall,2024-10-01 23:48:11.844118
+SKU00306,White Jewelry,Accessories,Jewelry,White,M,119.64,67.54,Fall,2024-03-24 23:48:11.844126
+SKU00307,Red Shirts,Tops,Shirts,Brown,XS,114.36,65.75,Summer,2024-07-27 23:48:11.844134
+SKU00308,Green Shirts,Tops,Shirts,Grey,XS,74.27,32.83,Spring,2024-08-27 23:48:11.844141
+SKU00309,Brown Sandals,Shoes,Sandals,Blue,XL,33.8,18.96,Summer,2024-09-12 23:48:11.844150
+SKU00310,Green Belts,Accessories,Belts,Blue,M,147.17,75.73,Fall,2024-07-31 23:48:11.844164
+SKU00311,Blue Bags,Accessories,Bags,Brown,XS,148.99,67.04,Summer,2024-10-20 23:48:11.844174
+SKU00312,Red Sandals,Shoes,Sandals,Brown,L,34.19,16.51,Fall,2024-02-09 23:48:11.844184
+SKU00313,White Jackets,Outerwear,Jackets,Brown,XL,116.22,68.58,Fall,2024-05-08 23:48:11.844194
+SKU00314,Black Summer Dresses,Dresses,Summer Dresses,White,XXL,146.24,81.77,Fall,2024-11-24 23:48:11.844202
+SKU00315,Brown Jackets,Outerwear,Jackets,Red,L,51.25,26.11,Fall,2024-07-07 23:48:11.844209
+SKU00316,Grey Shorts,Bottoms,Shorts,Black,XS,28.44,12.08,Winter,2024-12-18 23:48:11.844218
+SKU00317,Pink Shorts,Bottoms,Shorts,Black,L,42.31,18.27,Summer,2024-07-25 23:48:11.844225
+SKU00318,Grey Casual Dresses,Dresses,Casual Dresses,Green,XS,65.2,31.25,Summer,2024-11-30 23:48:11.844233
+SKU00319,Red Summer Dresses,Dresses,Summer Dresses,Brown,XXL,27.31,12.09,Spring,2024-12-26 23:48:11.844241
+SKU00320,Red Blouses,Tops,Blouses,Pink,XS,16.09,9.62,Fall,2024-10-26 23:48:11.844249
+SKU00321,Blue Blazers,Outerwear,Blazers,Pink,XS,45.91,19.31,Spring,2024-11-04 23:48:11.844256
+SKU00322,Blue Evening Dresses,Dresses,Evening Dresses,Brown,S,101.61,51.42,Summer,2024-11-21 23:48:11.844264
+SKU00323,Pink Blouses,Tops,Blouses,Grey,XXL,43.76,22.9,Summer,2024-05-30 23:48:11.844272
+SKU00324,White Jackets,Outerwear,Jackets,White,S,116.58,69.09,Winter,2024-06-30 23:48:11.844280
+SKU00325,Red Casual Dresses,Dresses,Casual Dresses,Green,XXL,26.37,15.02,Fall,2024-12-13 23:48:11.844292
+SKU00326,Red Sandals,Shoes,Sandals,Red,XXL,67.89,33.88,Spring,2024-08-26 23:48:11.844300
+SKU00327,Pink Blouses,Tops,Blouses,White,XL,134.98,79.2,Spring,2024-06-25 23:48:11.844308
+SKU00328,Brown Shorts,Bottoms,Shorts,Grey,XL,107.2,43.24,Winter,2024-11-19 23:48:11.844316
+SKU00329,Green T-shirts,Tops,T-shirts,Red,XS,139.55,63.82,Winter,2024-04-11 23:48:11.844324
+SKU00330,Brown Heels,Shoes,Heels,Brown,XS,101.47,42.28,Summer,2024-08-06 23:48:11.844331
+SKU00331,Blue Blouses,Tops,Blouses,Grey,L,94.17,50.83,Spring,2024-07-21 23:48:11.844340
+SKU00332,Black Boots,Shoes,Boots,Red,XS,139.82,73.05,Spring,2024-05-08 23:48:11.844349
+SKU00333,Blue Sweaters,Tops,Sweaters,White,XS,110.57,55.21,Spring,2024-10-04 23:48:11.844359
+SKU00334,Green Summer Dresses,Dresses,Summer Dresses,Blue,M,32.14,17.81,Fall,2024-10-27 23:48:11.844367
+SKU00335,Brown Sweaters,Tops,Sweaters,Green,XL,23.62,11.6,Spring,2024-04-16 23:48:11.844375
+SKU00336,Pink Casual Dresses,Dresses,Casual Dresses,Blue,M,36.24,19.38,Spring,2024-03-08 23:48:11.844383
+SKU00337,Black Blouses,Tops,Blouses,Black,XS,48.01,22.88,Winter,2024-06-23 23:48:11.844391
+SKU00338,Black Trousers,Bottoms,Trousers,Brown,S,58.44,26.55,Winter,2024-07-16 23:48:11.844399
+SKU00339,White Sweaters,Tops,Sweaters,Black,S,45.13,18.67,Spring,2024-06-04 23:48:11.844407
+SKU00340,Green Coats,Outerwear,Coats,Grey,XS,89.67,39.47,Spring,2024-06-21 23:48:11.844415
+SKU00341,Red Belts,Accessories,Belts,Pink,M,94.88,51.85,Winter,2024-09-17 23:48:11.844422
+SKU00342,Blue Scarves,Accessories,Scarves,Black,L,18.23,10.35,Fall,2024-02-05 23:48:11.844430
+SKU00343,Black Sweaters,Tops,Sweaters,Brown,XXL,113.17,57.26,Spring,2024-09-12 23:48:11.844438
+SKU00344,Pink Shorts,Bottoms,Shorts,Black,S,111.07,64.89,Spring,2024-12-04 23:48:11.844446
+SKU00345,Grey Jewelry,Accessories,Jewelry,Pink,XXL,26.46,11.29,Spring,2024-04-12 23:48:11.844453
+SKU00346,Black Jackets,Outerwear,Jackets,Brown,XXL,145.17,65.65,Summer,2024-07-30 23:48:11.844461
+SKU00347,Grey Evening Dresses,Dresses,Evening Dresses,Grey,L,51.71,22.09,Spring,2024-09-14 23:48:11.844469
+SKU00348,Blue Bags,Accessories,Bags,White,S,75.69,32.1,Fall,2024-06-01 23:48:11.844476
+SKU00349,Pink Casual Dresses,Dresses,Casual Dresses,Green,L,50.78,21.91,Spring,2024-11-10 23:48:11.844484
+SKU00350,Black Sandals,Shoes,Sandals,Red,M,35.02,16.78,Summer,2024-06-27 23:48:11.844493
+SKU00351,Green Sweaters,Tops,Sweaters,Blue,XS,143.53,78.89,Winter,2024-03-17 23:48:11.844501
+SKU00352,Pink Jeans,Bottoms,Jeans,White,S,31.4,13.38,Spring,2024-09-04 23:48:11.844514
+SKU00353,White Coats,Outerwear,Coats,Green,XS,17.94,10.41,Spring,2024-09-16 23:48:11.844542
+SKU00354,White Jackets,Outerwear,Jackets,Grey,XS,20.76,9.0,Winter,2024-12-01 23:48:11.844576
+SKU00355,Brown Jewelry,Accessories,Jewelry,Pink,XS,66.67,31.39,Winter,2024-09-29 23:48:11.844628
+SKU00356,Green Skirts,Bottoms,Skirts,Pink,S,19.68,9.84,Summer,2024-07-28 23:48:11.844660
+SKU00357,Black Jewelry,Accessories,Jewelry,White,M,66.71,35.26,Winter,2024-09-15 23:48:11.844673
+SKU00358,Black Scarves,Accessories,Scarves,Brown,XXL,63.48,36.98,Winter,2024-07-03 23:48:11.844682
+SKU00359,Brown Belts,Accessories,Belts,Green,S,18.52,10.73,Summer,2024-12-11 23:48:11.844690
+SKU00360,Pink Casual Dresses,Dresses,Casual Dresses,Grey,XL,149.95,67.41,Summer,2024-11-05 23:48:11.844698
+SKU00361,Black Skirts,Bottoms,Skirts,Red,XL,129.28,75.89,Winter,2024-06-28 23:48:11.844706
+SKU00362,Red Trousers,Bottoms,Trousers,Grey,XXL,109.18,64.36,Spring,2024-06-29 23:48:11.844714
+SKU00363,Red Scarves,Accessories,Scarves,Pink,XL,56.72,23.71,Winter,2024-12-07 23:48:11.844722
+SKU00364,Black Trousers,Bottoms,Trousers,Pink,XS,59.78,27.99,Summer,2024-10-21 23:48:11.844730
+SKU00365,Black Skirts,Bottoms,Skirts,Black,S,94.19,53.62,Summer,2024-10-31 23:48:11.844738
+SKU00366,Grey Casual Dresses,Dresses,Casual Dresses,Brown,XL,28.64,12.24,Fall,2024-07-14 23:48:11.844746
+SKU00367,Pink Shorts,Bottoms,Shorts,Grey,S,110.47,58.89,Fall,2024-09-03 23:48:11.844754
+SKU00368,Green Shorts,Bottoms,Shorts,Green,S,38.99,18.65,Spring,2024-03-08 23:48:11.844762
+SKU00369,Blue Bags,Accessories,Bags,Grey,XL,44.82,19.19,Spring,2024-04-16 23:48:11.844770
+SKU00370,Red Sneakers,Shoes,Sneakers,Grey,M,37.66,20.56,Spring,2024-02-03 23:48:11.844778
+SKU00371,Black Evening Dresses,Dresses,Evening Dresses,Green,S,48.69,21.98,Spring,2024-06-30 23:48:11.844786
+SKU00372,Black T-shirts,Tops,T-shirts,Brown,L,113.9,56.79,Summer,2024-05-29 23:48:11.844798
+SKU00373,Brown Coats,Outerwear,Coats,White,L,121.48,59.56,Summer,2024-10-04 23:48:11.844808
+SKU00374,Black Sweaters,Tops,Sweaters,Grey,M,143.47,62.27,Spring,2024-07-04 23:48:11.844816
+SKU00375,White Jackets,Outerwear,Jackets,White,M,95.19,46.29,Winter,2024-12-11 23:48:11.844826
+SKU00376,Brown Boots,Shoes,Boots,Blue,XS,28.67,13.81,Summer,2024-09-20 23:48:11.844834
+SKU00377,Green Belts,Accessories,Belts,Green,S,27.95,14.25,Winter,2024-03-09 23:48:11.844841
+SKU00378,Black Jackets,Outerwear,Jackets,Grey,XS,72.73,37.82,Fall,2024-02-10 23:48:11.844849
+SKU00379,Black Jeans,Bottoms,Jeans,Red,S,101.16,57.54,Spring,2024-04-28 23:48:11.844856
+SKU00380,Pink Evening Dresses,Dresses,Evening Dresses,Pink,XXL,50.78,24.08,Winter,2024-09-23 23:48:11.844864
+SKU00381,Blue Coats,Outerwear,Coats,Pink,XS,50.54,22.5,Winter,2024-08-14 23:48:11.844872
+SKU00382,Black Summer Dresses,Dresses,Summer Dresses,Blue,XXL,105.11,59.03,Spring,2024-07-03 23:48:11.844879
+SKU00383,Red Blazers,Outerwear,Blazers,Black,L,125.48,67.43,Winter,2024-03-27 23:48:11.844887
+SKU00384,Red Blazers,Outerwear,Blazers,Pink,M,25.66,13.2,Spring,2024-04-13 23:48:11.844895
+SKU00385,White Scarves,Accessories,Scarves,Pink,S,143.12,80.39,Summer,2024-09-09 23:48:11.844903
+SKU00386,Brown Jeans,Bottoms,Jeans,White,XXL,73.78,33.32,Summer,2024-02-26 23:48:11.844911
+SKU00387,White Sneakers,Shoes,Sneakers,Brown,XL,68.64,34.59,Fall,2024-08-07 23:48:11.844919
+SKU00388,White Shirts,Tops,Shirts,Brown,S,35.01,17.94,Spring,2024-11-02 23:48:11.844927
+SKU00389,Grey Sweaters,Tops,Sweaters,Brown,M,66.71,34.81,Winter,2024-03-09 23:48:11.844936
+SKU00390,Green Blouses,Tops,Blouses,Brown,S,98.46,47.18,Winter,2024-12-07 23:48:11.844944
+SKU00391,Red Summer Dresses,Dresses,Summer Dresses,Black,XXL,79.15,31.98,Fall,2024-06-19 23:48:11.844953
+SKU00392,Green Evening Dresses,Dresses,Evening Dresses,Pink,XXL,107.46,49.44,Summer,2024-10-19 23:48:11.844961
+SKU00393,Grey Heels,Shoes,Heels,Green,XXL,71.26,34.8,Spring,2024-09-21 23:48:11.844969
+SKU00394,Pink Blazers,Outerwear,Blazers,Grey,XS,84.56,39.09,Summer,2024-11-23 23:48:11.844977
+SKU00395,Blue Jewelry,Accessories,Jewelry,Black,S,41.02,18.45,Summer,2024-11-27 23:48:11.844985
+SKU00396,Grey Jackets,Outerwear,Jackets,Red,M,64.73,31.03,Winter,2024-04-12 23:48:11.844995
+SKU00397,Red T-shirts,Tops,T-shirts,Grey,L,95.2,49.25,Summer,2024-04-28 23:48:11.845002
+SKU00398,Blue Evening Dresses,Dresses,Evening Dresses,Green,XXL,127.17,51.57,Spring,2024-08-03 23:48:11.845010
+SKU00399,Red Blouses,Tops,Blouses,Red,XXL,45.39,24.07,Summer,2024-08-11 23:48:11.845018
+SKU00400,Black Bags,Accessories,Bags,Pink,S,102.4,46.13,Spring,2024-09-03 23:48:11.845026
+SKU00401,Green Summer Dresses,Dresses,Summer Dresses,Brown,L,129.96,57.66,Winter,2024-08-19 23:48:11.845036
+SKU00402,Brown Summer Dresses,Dresses,Summer Dresses,White,XS,84.05,44.5,Fall,2024-03-14 23:48:11.845044
+SKU00403,Green Belts,Accessories,Belts,White,L,23.62,10.98,Fall,2024-02-03 23:48:11.845052
+SKU00404,Green Evening Dresses,Dresses,Evening Dresses,Red,S,84.83,47.6,Summer,2024-11-27 23:48:11.845059
+SKU00405,Grey Jewelry,Accessories,Jewelry,Blue,XXL,18.44,8.33,Winter,2024-07-28 23:48:11.845067
+SKU00406,Brown Coats,Outerwear,Coats,Black,XL,110.59,60.31,Summer,2024-07-04 23:48:11.845075
+SKU00407,Grey Shorts,Bottoms,Shorts,Green,S,128.49,53.9,Summer,2024-07-29 23:48:11.845083
+SKU00408,Blue Skirts,Bottoms,Skirts,Grey,XXL,27.06,14.85,Fall,2024-09-03 23:48:11.845091
+SKU00409,Grey Evening Dresses,Dresses,Evening Dresses,Grey,M,94.05,46.47,Winter,2024-10-27 23:48:11.845099
+SKU00410,Pink Sneakers,Shoes,Sneakers,Red,XL,31.18,14.33,Winter,2024-03-30 23:48:11.845107
+SKU00411,Blue Blouses,Tops,Blouses,Red,M,70.24,32.54,Winter,2024-10-14 23:48:11.845123
+SKU00412,White Boots,Shoes,Boots,Pink,M,100.19,52.79,Summer,2024-07-19 23:48:11.845131
+SKU00413,Green Shirts,Tops,Shirts,Red,S,92.8,51.69,Summer,2024-04-20 23:48:11.845138
+SKU00414,Brown Blouses,Tops,Blouses,Brown,L,72.92,29.24,Winter,2024-06-13 23:48:11.845146
+SKU00415,Grey Scarves,Accessories,Scarves,Black,M,117.17,62.73,Summer,2024-12-17 23:48:11.845154
+SKU00416,Red Boots,Shoes,Boots,Grey,M,32.41,16.78,Winter,2024-04-13 23:48:11.845161
+SKU00417,Black Jeans,Bottoms,Jeans,Green,M,76.55,44.21,Fall,2024-05-18 23:48:11.845171
+SKU00418,Pink Skirts,Bottoms,Skirts,Grey,S,37.26,16.61,Winter,2024-12-17 23:48:11.845183
+SKU00419,Red Boots,Shoes,Boots,Black,XL,83.13,45.07,Spring,2024-06-22 23:48:11.845191
+SKU00420,Green Shirts,Tops,Shirts,Black,XL,149.28,61.15,Spring,2024-12-16 23:48:11.845199
+SKU00421,Pink Shirts,Tops,Shirts,Brown,XS,88.88,39.2,Winter,2024-10-09 23:48:11.845206
+SKU00422,Green Sneakers,Shoes,Sneakers,Brown,XXL,28.63,14.92,Fall,2024-02-12 23:48:11.845214
+SKU00423,White Shorts,Bottoms,Shorts,White,M,30.39,13.36,Spring,2024-04-16 23:48:11.845222
+SKU00424,Red Skirts,Bottoms,Skirts,Grey,XXL,70.32,35.84,Summer,2024-12-06 23:48:11.845229
+SKU00425,Grey Shorts,Bottoms,Shorts,Red,XS,16.72,9.48,Spring,2024-10-31 23:48:11.845237
+SKU00426,Blue Heels,Shoes,Heels,White,XL,25.13,13.29,Spring,2024-08-17 23:48:11.845245
+SKU00427,Green Coats,Outerwear,Coats,Pink,XS,28.47,16.24,Summer,2024-12-06 23:48:11.845252
+SKU00428,Grey Summer Dresses,Dresses,Summer Dresses,Brown,XXL,30.65,17.48,Spring,2024-12-22 23:48:11.845260
+SKU00429,Grey Boots,Shoes,Boots,Grey,L,143.94,68.3,Fall,2024-11-09 23:48:11.845268
+SKU00430,White Casual Dresses,Dresses,Casual Dresses,Brown,L,144.91,77.96,Fall,2024-06-12 23:48:11.845278
+SKU00431,Blue Coats,Outerwear,Coats,White,S,108.98,45.85,Spring,2024-10-06 23:48:11.845286
+SKU00432,Pink Jewelry,Accessories,Jewelry,Blue,XL,66.27,26.89,Fall,2024-02-17 23:48:11.845294
+SKU00433,Pink Boots,Shoes,Boots,Pink,XS,134.83,55.64,Winter,2024-12-03 23:48:11.845302
+SKU00434,Black Sandals,Shoes,Sandals,Red,XXL,132.87,70.73,Spring,2024-05-19 23:48:11.845310
+SKU00435,Grey Shorts,Bottoms,Shorts,Brown,S,128.27,67.81,Spring,2024-12-21 23:48:11.845318
+SKU00436,Pink Shorts,Bottoms,Shorts,Blue,XS,116.44,54.28,Fall,2024-08-25 23:48:11.845325
+SKU00437,Red Casual Dresses,Dresses,Casual Dresses,Brown,L,125.31,61.26,Spring,2024-05-05 23:48:11.845335
+SKU00438,White Jewelry,Accessories,Jewelry,Pink,L,57.67,24.25,Winter,2024-12-17 23:48:11.845343
+SKU00439,Black Jackets,Outerwear,Jackets,White,XL,145.03,74.32,Fall,2024-04-10 23:48:11.845353
+SKU00440,Grey Heels,Shoes,Heels,Grey,XS,125.24,64.13,Winter,2024-07-10 23:48:11.845361
+SKU00441,Grey Jewelry,Accessories,Jewelry,Pink,XS,28.15,13.18,Summer,2024-12-25 23:48:11.845368
+SKU00442,Grey Sandals,Shoes,Sandals,White,XS,136.08,76.8,Winter,2024-10-16 23:48:11.845376
+SKU00443,White Heels,Shoes,Heels,Green,XL,41.45,18.37,Spring,2024-06-08 23:48:11.845383
+SKU00444,White Skirts,Bottoms,Skirts,Brown,XS,140.09,68.85,Spring,2024-05-10 23:48:11.845391
+SKU00445,Pink Scarves,Accessories,Scarves,Black,XL,114.39,56.8,Winter,2024-03-02 23:48:11.845399
+SKU00446,Blue Scarves,Accessories,Scarves,Blue,XS,67.3,38.78,Fall,2024-04-12 23:48:11.845408
+SKU00447,Red Blazers,Outerwear,Blazers,Green,L,145.09,81.39,Fall,2024-05-09 23:48:11.845415
+SKU00448,Green Shorts,Bottoms,Shorts,Grey,XXL,114.47,50.59,Summer,2024-09-15 23:48:11.845423
+SKU00449,Grey Sandals,Shoes,Sandals,Blue,XXL,102.76,52.25,Summer,2024-04-13 23:48:11.845431
+SKU00450,White Sandals,Shoes,Sandals,Grey,XL,79.85,36.51,Winter,2024-03-28 23:48:11.845441
+SKU00451,White Jackets,Outerwear,Jackets,Black,L,34.62,15.7,Spring,2024-09-15 23:48:11.845449
+SKU00452,Green Skirts,Bottoms,Skirts,Blue,XS,108.23,59.6,Fall,2024-09-13 23:48:11.845457
+SKU00453,Pink Sweaters,Tops,Sweaters,White,XL,132.18,63.15,Summer,2024-03-14 23:48:11.845465
+SKU00454,Black Belts,Accessories,Belts,Brown,L,71.24,29.26,Fall,2024-03-19 23:48:11.845473
+SKU00455,Red Sandals,Shoes,Sandals,Pink,S,138.05,70.31,Fall,2024-02-29 23:48:11.845481
+SKU00456,Red Scarves,Accessories,Scarves,Green,L,38.95,23.08,Spring,2024-09-22 23:48:11.845489
+SKU00457,Brown Sneakers,Shoes,Sneakers,Black,L,52.68,22.77,Fall,2024-10-21 23:48:11.845498
+SKU00458,Grey Casual Dresses,Dresses,Casual Dresses,Pink,XXL,141.56,82.92,Spring,2024-10-09 23:48:11.845506
+SKU00459,Green Bags,Accessories,Bags,Pink,XL,89.27,45.09,Spring,2024-07-17 23:48:11.845513
+SKU00460,Blue Jeans,Bottoms,Jeans,Brown,XL,87.5,38.87,Spring,2024-07-01 23:48:11.845526
+SKU00461,Grey Skirts,Bottoms,Skirts,Grey,M,44.49,25.13,Winter,2024-03-14 23:48:11.845534
+SKU00462,White Sneakers,Shoes,Sneakers,Grey,L,47.45,25.46,Summer,2024-12-06 23:48:11.845542
+SKU00463,White Evening Dresses,Dresses,Evening Dresses,Brown,M,87.93,51.2,Fall,2024-12-14 23:48:11.845550
+SKU00464,Pink Summer Dresses,Dresses,Summer Dresses,Pink,XS,55.02,27.66,Summer,2024-07-15 23:48:11.845558
+SKU00465,Black Blouses,Tops,Blouses,White,S,105.5,59.83,Summer,2024-05-23 23:48:11.845566
+SKU00466,White Shorts,Bottoms,Shorts,Blue,XS,77.0,32.15,Fall,2024-12-07 23:48:11.845575
+SKU00467,Green Blouses,Tops,Blouses,White,XL,125.92,60.14,Fall,2024-06-01 23:48:11.845583
+SKU00468,Brown Heels,Shoes,Heels,Grey,XS,67.58,27.11,Spring,2024-03-28 23:48:11.845591
+SKU00469,Black Sneakers,Shoes,Sneakers,White,M,140.29,78.19,Spring,2024-07-31 23:48:11.845601
+SKU00470,White Summer Dresses,Dresses,Summer Dresses,Green,L,66.49,28.67,Spring,2024-04-28 23:48:11.845609
+SKU00471,Brown Trousers,Bottoms,Trousers,Green,XXL,34.45,17.59,Fall,2024-12-21 23:48:11.845617
+SKU00472,White Scarves,Accessories,Scarves,Black,XS,92.32,47.04,Winter,2024-03-26 23:48:11.845624
+SKU00473,Red Sweaters,Tops,Sweaters,Grey,S,70.71,30.89,Summer,2024-10-05 23:48:11.845632
+SKU00474,Red Belts,Accessories,Belts,White,S,105.58,51.97,Spring,2024-03-20 23:48:11.845640
+SKU00475,Green Bags,Accessories,Bags,White,M,28.26,13.32,Winter,2024-07-10 23:48:11.845648
+SKU00476,White Boots,Shoes,Boots,Green,XL,24.42,12.14,Summer,2024-07-17 23:48:11.845656
+SKU00477,Green Summer Dresses,Dresses,Summer Dresses,Blue,XL,91.53,39.7,Fall,2024-05-21 23:48:11.845663
+SKU00478,Red Casual Dresses,Dresses,Casual Dresses,Brown,M,128.41,73.91,Summer,2024-07-10 23:48:11.845671
+SKU00479,Grey Coats,Outerwear,Coats,Green,L,89.48,46.65,Summer,2024-01-31 23:48:11.845679
+SKU00480,Red Casual Dresses,Dresses,Casual Dresses,Green,XXL,134.66,77.89,Spring,2024-11-18 23:48:11.845686
+SKU00481,Brown Bags,Accessories,Bags,Red,XS,89.47,42.33,Winter,2024-10-11 23:48:11.845697
+SKU00482,Blue Skirts,Bottoms,Skirts,Pink,XL,83.91,41.99,Winter,2024-06-23 23:48:11.845705
+SKU00483,Blue Boots,Shoes,Boots,Blue,L,36.5,21.46,Summer,2024-04-23 23:48:11.845714
+SKU00484,Pink Blouses,Tops,Blouses,Red,XS,50.69,27.05,Summer,2024-12-05 23:48:11.845721
+SKU00485,Brown Belts,Accessories,Belts,Pink,L,134.01,56.37,Spring,2024-07-14 23:48:11.845729
+SKU00486,Green Belts,Accessories,Belts,Blue,L,103.25,54.79,Fall,2024-03-01 23:48:11.845737
+SKU00487,Brown Sweaters,Tops,Sweaters,Red,XL,69.79,38.98,Fall,2024-04-21 23:48:11.845744
+SKU00488,Blue Bags,Accessories,Bags,Pink,S,46.05,19.8,Fall,2024-09-09 23:48:11.845752
+SKU00489,White Skirts,Bottoms,Skirts,Red,L,124.51,66.62,Spring,2024-04-24 23:48:11.845762
+SKU00490,Blue Jackets,Outerwear,Jackets,Brown,XS,47.9,24.83,Summer,2024-03-08 23:48:11.845770
+SKU00491,Blue Jeans,Bottoms,Jeans,Black,S,49.87,29.51,Summer,2024-04-06 23:48:11.845778
+SKU00492,Green Bags,Accessories,Bags,White,S,75.64,32.84,Winter,2024-04-24 23:48:11.845786
+SKU00493,Blue Blazers,Outerwear,Blazers,Blue,XL,104.05,56.69,Fall,2024-10-02 23:48:11.845793
+SKU00494,White Evening Dresses,Dresses,Evening Dresses,Red,L,67.04,29.53,Spring,2024-12-18 23:48:11.845801
+SKU00495,Blue Jewelry,Accessories,Jewelry,White,S,79.24,39.67,Spring,2024-03-29 23:48:11.845811
+SKU00496,Pink T-shirts,Tops,T-shirts,Blue,XL,87.8,44.29,Spring,2024-05-20 23:48:11.845819
+SKU00497,Brown Casual Dresses,Dresses,Casual Dresses,Red,L,121.59,62.96,Winter,2024-06-30 23:48:11.845827
+SKU00498,Brown Sneakers,Shoes,Sneakers,Blue,M,79.41,36.26,Summer,2024-11-14 23:48:11.845835
+SKU00499,Green Jewelry,Accessories,Jewelry,Red,XS,110.74,55.87,Spring,2024-03-06 23:48:11.845843

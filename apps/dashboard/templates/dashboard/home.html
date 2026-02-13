@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Inventory Intelligence System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-hero {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-hero-primary {
+            background: white;
+            color: var(--primary-color);
+            border: none;
+        }
+        
+        .btn-hero-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+            color: var(--primary-color);
+        }
+        
+        .btn-hero-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-hero-outline:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+        
+        .tech-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            margin: 5px;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        .cta-section {
+            background: #f8f9fa;
+            padding: 80px 0;
+        }
+        
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <h1 class="display-3 fw-bold mb-4">
+                        <i class="bi bi-graph-up-arrow"></i>
+                        Fashion Inventory Intelligence
+                    </h1>
+                    <p class="lead mb-4" style="font-size: 1.3rem;">
+                        AI-Powered Inventory Management & Demand Forecasting Platform
+                    </p>
+                    <p class="mb-5" style="font-size: 1.1rem; opacity: 0.9;">
+                        Real-time risk analysis, sales forecasting, and trend detection for fashion retail using machine learning.
+                    </p>
+                    <div class="d-flex gap-3 mb-4">
+                        <a href="/dashboard/overview/" class="btn btn-hero btn-hero-primary">
+                            <i class="bi bi-speedometer2"></i> View Dashboard
+                        </a>
+                        <a href="/admin/" class="btn btn-hero btn-hero-outline">
+                            <i class="bi bi-gear"></i> Admin Panel
+                        </a>
+                    </div>
+                    <div class="mt-4">
+                        <span class="tech-badge"><i class="bi bi-graph-up"></i> ML Forecasting</span>
+                        <span class="tech-badge"><i class="bi bi-shield-check"></i> Risk Analysis</span>
+                        <span class="tech-badge"><i class="bi bi-lightning"></i> Real-time Alerts</span>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-center d-none d-lg-block">
+                    <div class="stat-card">
+                        <div class="stat-number">{{ total_products }}</div>
+                        <p class="text-muted mb-0">Products Tracked</p>
+                    </div>
+                    <div class="stat-card mt-3">
+                        <div class="stat-number">{{ total_sales|default:0 }}</div>
+                        <p class="text-muted mb-0">Sales Records</p>
+                    </div>
+                    <div class="stat-card mt-3">
+                        <div class="stat-number">{{ total_predictions|default:0 }}</div>
+                        <p class="text-muted mb-0">Forecasts Generated</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container py-5 my-5">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">Powerful Features</h2>
+            <p class="text-muted">Everything you need for intelligent inventory management</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-graph-up"></i>
+                        </div>
+                        <h5 class="fw-bold">Sales Forecasting</h5>
+                        <p class="text-muted">30-day demand predictions with confidence intervals for 500+ products</p>
+                        <a href="/dashboard/forecasts/" class="btn btn-sm btn-outline-primary">
+                            Explore <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                        <h5 class="fw-bold">Risk Detection</h5>
+                        <p class="text-muted">Early warning system for overstock and stockout situations</p>
+                        <a href="/dashboard/risk-monitor/" class="btn btn-sm btn-outline-primary">
+                            View Risks <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-lightbulb"></i>
+                        </div>
+                        <h5 class="fw-bold">Smart Recommendations</h5>
+                        <p class="text-muted">AI-powered actionable insights with priority queuing</p>
+                        <a href="/dashboard/recommendations/" class="btn btn-sm btn-outline-primary">
+                            Get Insights <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-speedometer2"></i>
+                        </div>
+                        <h5 class="fw-bold">Real-time Dashboard</h5>
+                        <p class="text-muted">Live KPIs, interactive charts, and business intelligence</p>
+                        <a href="/dashboard/overview/" class="btn btn-sm btn-outline-primary">
+                            Dashboard <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="cta-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="display-6 fw-bold mb-4">Built with Modern Tech Stack</h2>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>Django 5.2</strong> - Robust backend framework
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>Machine Learning</strong> - Statistical forecasting models
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>Celery</strong> - Automated background tasks
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>REST API</strong> - Full API access
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>Chart.js</strong> - Interactive visualizations
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body p-5">
+                            <h4 class="mb-4">Quick Access</h4>
+                            <div class="d-grid gap-3">
+                                <a href="/dashboard/overview/" class="btn btn-lg btn-primary">
+                                    <i class="bi bi-speedometer2"></i> Executive Overview
+                                </a>
+                                <a href="/api/" class="btn btn-lg btn-outline-primary">
+                                    <i class="bi bi-code-square"></i> API Endpoints
+                                </a>
+                                <a href="/admin/" class="btn btn-lg btn-outline-secondary">
+                                    <i class="bi bi-gear"></i> Admin Interface
+                                </a>
+                            </div>
+                            
+                            {% if high_risk_alerts > 0 %}
+                            <div class="alert alert-warning mt-4 mb-0">
+                                <i class="bi bi-exclamation-triangle"></i>
+                                <strong>{{ high_risk_alerts }}</strong> high-risk products need attention
+                                <a href="/dashboard/risk-monitor/" class="alert-link">View now →</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="bi bi-graph-up-arrow"></i> Fashion Inventory Intelligence</h5>
+                    <p class="text-muted">AI-powered inventory management for fashion retail</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/dashboard/overview/" class="text-white-50">Dashboard</a></li>
+                        <li><a href="/dashboard/forecasts/" class="text-white-50">Forecasts</a></li>
+                        <li><a href="/dashboard/risk-monitor/" class="text-white-50">Risk Monitor</a></li>
+                        <li><a href="/api/" class="text-white-50">API Docs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>System Status</h6>
+                    <p class="text-white-50 mb-1">
+                        <i class="bi bi-circle-fill text-success"></i> All systems operational
+                    </p>
+                    <p class="text-white-50 mb-1">
+                        Products: {{ total_products }}
+                    </p>
+                    <p class="text-white-50">
+                        Forecasts: {{ total_predictions|default:0 }}
+                    </p>
+                </div>
+            </div>
+            <hr class="my-4" style="opacity: 0.1;">
+            <div class="text-center text-white-50">
+                <p class="mb-0">© 2026 Fashion Inventory Intelligence. Built with Django & ML.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

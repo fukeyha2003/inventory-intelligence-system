@@ -1,167 +1,71 @@
 {% extends 'base.html' %}
-
-{% block title %}Forecast Explorer - Fashion Inventory Intelligence{% endblock %}
+{% block title %}Forecasts{% endblock %}
+{% block page_title %}Forecast Explorer{% endblock %}
+{% block page_sub %}{{ company.name }} · 30-day demand predictions{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <div class="page-header">
-            <h1><i class="bi bi-graph-up"></i> Forecast Explorer</h1>
-            <p class="text-muted mb-0">Interactive 30-day sales forecasts with confidence intervals</p>
-        </div>
-    </div>
-</div>
 
-<!-- Filters -->
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <form method="get" class="row g-3">
-                    <div class="col-md-4">
-                        <label class="form-label">Category</label>
-                        <select name="category" class="form-select" onchange="this.form.submit()">
-                            <option value="">All Categories</option>
-                            {% for cat in categories %}
-                                <option value="{{ cat }}" {% if cat == selected_category %}selected{% endif %}>
-                                    {{ cat }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Search Product</label>
-                        <input type="text" class="form-control" id="productSearch" placeholder="Search by SKU or name...">
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label">&nbsp;</label>
-                        <button type="button" class="btn btn-outline-secondary w-100" onclick="location.href='/dashboard/forecasts/'">
-                            <i class="bi bi-arrow-clockwise"></i> Reset
-                        </button>
-                    </div>
-                </form>
+<!-- Product Selector -->
+<div class="card mb-4">
+    <div class="card-body" style="padding:20px !important;">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-5">
+                <label class="form-label">Select Product</label>
+                <select class="form-select" id="productSelect" onchange="loadForecast()">
+                    <option value="">— Choose a product —</option>
+                    {% for product in products %}
+                    <option value="{{ product.sku }}">{{ product.product_name }} ({{ product.sku }})</option>
+                    {% endfor %}
+                </select>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- Product List & Chart -->
-<div class="row">
-    <!-- Product List -->
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0"><i class="bi bi-list-ul"></i> Products</h5>
+            <div class="col-md-3">
+                <label class="form-label">Category Filter</label>
+                <select class="form-select" id="categoryFilter" onchange="filterProducts()">
+                    <option value="">All Categories</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat }}">{{ cat }}</option>
+                    {% endfor %}
+                </select>
             </div>
-            <div class="card-body p-0">
-                <div class="list-group list-group-flush" id="productList" style="max-height: 600px; overflow-y: auto;">
-                    {% if products %}
-                        {% for product in products %}
-                        <a href="#" class="list-group-item list-group-item-action product-item" 
-                           data-sku="{{ product.sku }}"
-                           data-name="{{ product.product_name }}"
-                           data-category="{{ product.category }}"
-                           data-price="${{ product.price }}">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1">{{ product.product_name }}</h6>
-                                <small class="text-muted">{{ product.sku }}</small>
-                            </div>
-                            <p class="mb-1">
-                                <span class="badge bg-info">{{ product.category }}</span>
-                                <span class="badge bg-secondary">${{ product.price }}</span>
-                            </p>
-                        </a>
-                        {% endfor %}
-                    {% else %}
-                        <div class="p-4 text-center text-muted">
-                            <i class="bi bi-inbox" style="font-size: 3rem;"></i>
-                            <p class="mt-2">No products with forecasts found</p>
-                            <small>Generate forecasts first using the API or Celery tasks</small>
-                        </div>
-                    {% endif %}
+            <div class="col-md-2">
+                <div class="kpi-card green" style="padding:14px;">
+                    <div class="kpi-label" style="margin-bottom:4px;">Total Products</div>
+                    <div class="kpi-value green" style="font-size:1.6rem;">{{ products|length }}</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="kpi-card blue" style="padding:14px;">
+                    <div class="kpi-label" style="margin-bottom:4px;">With Forecasts</div>
+                    <div class="kpi-value blue" style="font-size:1.6rem;">{{ forecast_count|default:0 }}</div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Forecast Chart -->
+<!-- Forecast Chart -->
+<div class="row g-3">
     <div class="col-lg-8">
-        <div class="card">
-            <div class="card-header">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0" id="chartTitle">
-                        <i class="bi bi-graph-up-arrow"></i> Select a Product
-                    </h5>
-                    <div id="chartMeta"></div>
-                </div>
+        <div class="chart-wrap" id="chartSection" style="display:none;">
+            <div class="chart-title">
+                <i class="bi bi-graph-up"></i>
+                <span id="chartTitle">Forecast</span>
             </div>
-            <div class="card-body">
-                <div id="chartPlaceholder" class="text-center py-5">
-                    <i class="bi bi-arrow-left" style="font-size: 4rem; color: #e5e7eb;"></i>
-                    <p class="text-muted mt-3">Click a product from the list to view its forecast</p>
-                </div>
-                <div id="chartContainer" style="display: none;">
-                    <div class="chart-container">
-                        <canvas id="forecastChart"></canvas>
-                    </div>
-                    
-                    <!-- Forecast Stats -->
-                    <div class="row mt-4" id="forecastStats">
-                        <div class="col-md-3">
-                            <div class="text-center">
-                                <h4 class="text-primary mb-0" id="totalUnits">-</h4>
-                                <small class="text-muted">Total Predicted Units</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="text-center">
-                                <h4 class="text-success mb-0" id="avgDaily">-</h4>
-                                <small class="text-muted">Avg Daily Sales</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="text-center">
-                                <h4 class="text-warning mb-0" id="confidence">-</h4>
-                                <small class="text-muted">Confidence Score</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="text-center">
-                                <h4 class="text-info mb-0" id="forecastDays">30</h4>
-                                <small class="text-muted">Forecast Days</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <canvas id="forecastChart" height="120"></canvas>
         </div>
-
-        <!-- Additional Info Card -->
-        <div class="card mt-4" id="additionalInfo" style="display: none;">
-            <div class="card-body">
-                <h6>Product Details</h6>
-                <div class="row">
-                    <div class="col-md-4">
-                        <small class="text-muted">Category</small>
-                        <p class="mb-2" id="productCategory">-</p>
-                    </div>
-                    <div class="col-md-4">
-                        <small class="text-muted">Price</small>
-                        <p class="mb-2" id="productPrice">-</p>
-                    </div>
-                    <div class="col-md-4">
-                        <small class="text-muted">SKU</small>
-                        <p class="mb-2" id="productSKU">-</p>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <a href="#" class="btn btn-sm btn-outline-primary" id="viewDetailsBtn">
-                        <i class="bi bi-box-arrow-up-right"></i> View Full Details
-                    </a>
-                    <a href="#" class="btn btn-sm btn-outline-secondary" id="downloadBtn">
-                        <i class="bi bi-download"></i> Download Forecast
-                    </a>
-                </div>
+        <div class="chart-wrap" id="emptyState" style="text-align:center;padding:60px 20px;">
+            <i class="bi bi-graph-up" style="font-size:3rem;color:var(--text-dim);display:block;margin-bottom:16px;"></i>
+            <h5 style="color:var(--text-muted);">Select a product to view forecast</h5>
+            <p style="color:var(--text-dim);font-size:.85rem;">30-day demand predictions with confidence intervals</p>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100" id="statsPanel">
+            <div class="card-header"><i class="bi bi-bar-chart text-accent me-2"></i>Forecast Stats</div>
+            <div class="card-body" id="statsBody">
+                <p style="color:var(--text-dim);font-size:.85rem;text-align:center;margin-top:40px;">
+                    Select a product to see stats
+                </p>
             </div>
         </div>
     </div>
@@ -171,173 +75,107 @@
 
 {% block extra_js %}
 <script>
-let currentChart = null;
+let forecastChartInstance = null;
 
-// Product search functionality
-document.getElementById('productSearch').addEventListener('input', function(e) {
-    const searchTerm = e.target.value.toLowerCase();
-    const items = document.querySelectorAll('.product-item');
-    
-    items.forEach(item => {
-        const sku = item.dataset.sku.toLowerCase();
-        const name = item.dataset.name.toLowerCase();
-        
-        if (sku.includes(searchTerm) || name.includes(searchTerm)) {
-            item.style.display = '';
-        } else {
-            item.style.display = 'none';
-        }
-    });
-});
-
-// Product click handler
-document.querySelectorAll('.product-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Remove active class from all items
-        document.querySelectorAll('.product-item').forEach(i => {
-            i.classList.remove('active');
+function filterProducts() {
+    const cat = document.getElementById('categoryFilter').value;
+    const select = document.getElementById('productSelect');
+    // Reset and reload — simple approach
+    if (!cat) {
+        select.querySelectorAll('option').forEach(o => o.style.display = '');
+    } else {
+        select.querySelectorAll('option').forEach(o => {
+            if (o.value === '') return;
+            // Filter by checking text
+            o.style.display = o.textContent.toLowerCase().includes(cat.toLowerCase()) ? '' : 'none';
         });
-        
-        // Add active class to clicked item
-        this.classList.add('active');
-        
-        // Get product data
-        const sku = this.dataset.sku;
-        const name = this.dataset.name;
-        const category = this.dataset.category;
-        const price = this.dataset.price;
-        
-        // Update UI
-        document.getElementById('chartTitle').innerHTML = 
-            `<i class="bi bi-graph-up-arrow"></i> ${name}`;
-        document.getElementById('productCategory').textContent = category;
-        document.getElementById('productPrice').textContent = price;
-        document.getElementById('productSKU').textContent = sku;
-        
-        // Load forecast
-        loadForecast(sku);
-    });
-});
-
-function loadForecast(sku) {
-    // Show loading state
-    document.getElementById('chartPlaceholder').style.display = 'none';
-    document.getElementById('chartContainer').style.display = 'block';
-    document.getElementById('additionalInfo').style.display = 'block';
-    
-    // Fetch forecast data
-    fetch(`/dashboard/api/product-forecast/${sku}/`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Forecast not found');
-            }
-            return response.json();
-        })
-        .then(data => {
-            renderChart(data);
-            updateStats(data);
-        })
-        .catch(error => {
-            console.error('Error loading forecast:', error);
-            alert('No forecast data available for this product. Generate forecasts first.');
-            document.getElementById('chartContainer').style.display = 'none';
-            document.getElementById('chartPlaceholder').style.display = 'block';
-        });
-}
-
-function renderChart(data) {
-    const ctx = document.getElementById('forecastChart').getContext('2d');
-    
-    // Destroy existing chart
-    if (currentChart) {
-        currentChart.destroy();
     }
-    
-    // Create new chart
-    currentChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: {
-                mode: 'index',
-                intersect: false,
-            },
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.dataset.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            label += context.parsed.y.toFixed(2) + ' units';
-                            return label;
-                        }
-                    }
-                },
-                title: {
-                    display: true,
-                    text: '30-Day Sales Forecast with Confidence Intervals'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Predicted Units'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Date'
-                    }
-                }
-            }
-        }
-    });
 }
 
-function updateStats(data) {
-    // Calculate stats from forecast data
-    const predicted = data.datasets[0].data;
-    const total = predicted.reduce((a, b) => a + b, 0);
-    const avg = total / predicted.length;
-    
-    // Update stat cards
-    document.getElementById('totalUnits').textContent = total.toFixed(1);
-    document.getElementById('avgDaily').textContent = avg.toFixed(2);
-    document.getElementById('confidence').textContent = '65%'; // Placeholder
-    document.getElementById('forecastDays').textContent = predicted.length;
+function loadForecast() {
+    const sku = document.getElementById('productSelect').value;
+    if (!sku) {
+        document.getElementById('chartSection').style.display = 'none';
+        document.getElementById('emptyState').style.display = 'block';
+        return;
+    }
+
+    fetch(`/dashboard/api/product-forecast/${sku}/`)
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('chartSection').style.display = 'block';
+            document.getElementById('chartTitle').textContent = `${data.product_name} — 30 Day Forecast`;
+
+            if (forecastChartInstance) forecastChartInstance.destroy();
+
+            forecastChartInstance = new Chart(document.getElementById('forecastChart'), {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [
+                        {
+                            label: 'Predicted Units',
+                            data: data.predicted,
+                            borderColor: '#00e5a0',
+                            backgroundColor: 'rgba(0,229,160,0.08)',
+                            fill: true,
+                            borderWidth: 2,
+                            tension: 0.4,
+                            pointRadius: 3,
+                        },
+                        {
+                            label: 'Upper Bound',
+                            data: data.upper,
+                            borderColor: 'rgba(0,229,160,0.3)',
+                            borderDash: [5,5],
+                            fill: false,
+                            borderWidth: 1,
+                            pointRadius: 0,
+                        },
+                        {
+                            label: 'Lower Bound',
+                            data: data.lower,
+                            borderColor: 'rgba(0,229,160,0.3)',
+                            borderDash: [5,5],
+                            fill: false,
+                            borderWidth: 1,
+                            pointRadius: 0,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'top' } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.04)' } },
+                        y: { grid: { color: 'rgba(255,255,255,0.04)' }, title: { display: true, text: 'Units' } }
+                    }
+                }
+            });
+
+            // Update stats panel
+            const totalUnits = (data.predicted || []).reduce((a,b) => a+b, 0);
+            const avgConfidence = data.confidence ? Math.round(data.confidence * 100) : 0;
+            document.getElementById('statsBody').innerHTML = `
+                <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);">
+                    <span style="color:var(--text-muted);font-size:.85rem;">Product</span>
+                    <span style="font-weight:600;font-size:.85rem;">${data.product_name || sku}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);">
+                    <span style="color:var(--text-muted);font-size:.85rem;">Predicted Units (30d)</span>
+                    <span style="color:var(--accent);font-weight:700;">${Math.round(totalUnits)}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);">
+                    <span style="color:var(--text-muted);font-size:.85rem;">Avg Daily Units</span>
+                    <span style="color:var(--blue);font-weight:700;">${(totalUnits/30).toFixed(1)}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:12px 0;">
+                    <span style="color:var(--text-muted);font-size:.85rem;">Confidence Score</span>
+                    <span style="color:var(--warn);font-weight:700;">${avgConfidence}%</span>
+                </div>
+            `;
+        }).catch(() => {});
 }
 </script>
-
-<style>
-.product-item {
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.product-item:hover {
-    background-color: #f8f9fa;
-}
-
-.product-item.active {
-    background-color: #e7f3ff;
-    border-left: 4px solid #667eea;
-}
-
-.list-group-item {
-    border-left: none;
-    border-right: none;
-}
-</style>
 {% endblock %}

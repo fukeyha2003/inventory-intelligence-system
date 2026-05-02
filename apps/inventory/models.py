@@ -1,8 +1,3 @@
-# Product class → Creates "products" table in database
-# SalesHistory class → Creates "sales_history" table
-# InventoryLevel class → Creates "inventory_levels" table
-
-# Create your models here.
 """
 Django Models for Fashion Inventory System
 Location: apps/inventory/models.py
@@ -10,11 +5,65 @@ Location: apps/inventory/models.py
 
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
+
+# ============================================================================
+# COMPANY & USER MODELS (DEFINE THESE FIRST!)
+# ============================================================================
+
+class Company(models.Model):
+    """Company/Organization model for multi-tenant support"""
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+    
+    # Subscription info (optional)
+    subscription_plan = models.CharField(
+        max_length=50, 
+        choices=[('free', 'Free'), ('pro', 'Pro'), ('enterprise', 'Enterprise')],
+        default='free'
+    )
+    
+    class Meta:
+        db_table = 'companies'
+        verbose_name_plural = 'Companies'
+    
+    def __str__(self):
+        return self.name
+
+
+class UserProfile(models.Model):
+    """Extended user profile"""
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='users')
+    role = models.CharField(
+        max_length=20,
+        choices=[
+            ('admin', 'Administrator'),
+            ('manager', 'Manager'),
+            ('viewer', 'Viewer')
+        ],
+        default='viewer'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = 'user_profiles'
+    
+    def __str__(self):
+        return f"{self.user.email} - {self.company.name}"
+
+
+# ============================================================================
+# INVENTORY MODELS (NOW Company exists above, so this works!)
+# ============================================================================
 
 class Product(models.Model):
     """Product catalog"""
-    sku = models.CharField(max_length=50, unique=True, db_index=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='products')  # ← Now this works!
+    sku = models.CharField(max_length=50, db_index=True)  # ← Removed 'unique=True' because of unique_together below
     product_name = models.CharField(max_length=200)
     
     # Product attributes
@@ -36,6 +85,7 @@ class Product(models.Model):
     class Meta:
         db_table = 'products'
         ordering = ['-created_at']
+        unique_together = ['company', 'sku']  # SKU unique per company
     
     def __str__(self):
         return f"{self.sku} - {self.product_name}"

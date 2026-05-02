@@ -1,172 +1,194 @@
 {% extends 'base.html' %}
+{% block title %}Overview{% endblock %}
+{% block page_title %}Executive Overview{% endblock %}
+{% block page_sub %}{{ company.name }} &middot; Last updated just now{% endblock %}
 
-{% block title %}Executive Overview - Fashion Inventory Intelligence{% endblock %}
+{% block extra_css %}
+<style>
+    /* CSS Grid — not Bootstrap, so it always works */
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    .charts-grid {
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    .bottom-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    /* Stat rows inside cards */
+    .stat-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--border);
+        gap: 12px;
+    }
+
+    .stat-row:last-child { border-bottom: none; }
+
+    .stat-row-label {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+    }
+
+    .stat-row-val {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+    }
+
+    @media (max-width: 1100px) {
+        .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+        .charts-grid { grid-template-columns: 1fr; }
+        .bottom-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+        .kpi-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <div class="page-header">
-            <h1><i class="bi bi-speedometer2"></i> Executive Overview</h1>
-            <p class="text-muted mb-0">Real-time business intelligence and key performance indicators</p>
-        </div>
-    </div>
-</div>
 
 <!-- KPI Cards -->
-<div class="row g-4 mb-4">
-    <!-- Total Products -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card">
-            <div class="stat-value">{{ total_products|default:0 }}</div>
-            <div class="stat-label">
-                <i class="bi bi-box-seam"></i> Total Products
+<div class="kpi-grid">
+    <div class="kpi-card green">
+        <div class="kpi-label"><i class="bi bi-box-seam"></i> Total Products</div>
+        <div class="kpi-value green">{{ total_products|default:0 }}</div>
+        <div class="kpi-sub">Products in catalog</div>
+    </div>
+    <div class="kpi-card blue">
+        <div class="kpi-label"><i class="bi bi-boxes"></i> Units in Stock</div>
+        <div class="kpi-value blue">{{ total_inventory|default:0 }}</div>
+        <div class="kpi-sub">Across all warehouses</div>
+    </div>
+    <div class="kpi-card warn">
+        <div class="kpi-label"><i class="bi bi-currency-dollar"></i> Revenue (30d)</div>
+        <div class="kpi-value warn">${{ revenue_30d|default:0|floatformat:0 }}</div>
+        <div class="kpi-sub">Last 30 days</div>
+    </div>
+    <div class="kpi-card red">
+        <div class="kpi-label"><i class="bi bi-exclamation-triangle"></i> High Risk Alerts</div>
+        <div class="kpi-value red">{{ high_risk_count|default:0 }}</div>
+        <div class="kpi-sub">Needs attention</div>
+    </div>
+</div>
+
+<!-- Charts -->
+<div class="charts-grid">
+    <!-- Revenue trend -->
+    <div class="chart-wrap">
+        <div class="chart-title">
+            <i class="bi bi-graph-up"></i> Revenue Trend — Last 30 Days
+        </div>
+        <div style="position:relative; height:240px;">
+            <canvas id="revenueChart"></canvas>
+            <div id="revenueEmpty" style="display:none; position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                <i class="bi bi-bar-chart" style="font-size:2.5rem; color:var(--text-dim); margin-bottom:10px;"></i>
+                <p style="color:var(--text-dim); font-size:.85rem; margin:0;">Upload data &amp; generate analysis to see revenue trends</p>
             </div>
         </div>
     </div>
-    
-    <!-- Total Inventory -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card" style="border-left-color: #10b981;">
-            <div class="stat-value" style="color: #10b981;">{{ total_inventory|default:0 }}</div>
-            <div class="stat-label">
-                <i class="bi bi-boxes"></i> Units in Stock
-            </div>
+
+    <!-- Risk distribution -->
+    <div class="chart-wrap">
+        <div class="chart-title">
+            <i class="bi bi-pie-chart"></i> Risk Distribution
         </div>
-    </div>
-    
-    <!-- 30-Day Revenue -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card" style="border-left-color: #f59e0b;">
-            <div class="stat-value" style="color: #f59e0b;">${{ revenue_30d|floatformat:0|default:0 }}</div>
-            <div class="stat-label">
-                <i class="bi bi-currency-dollar"></i> Revenue (30d)
-            </div>
-        </div>
-    </div>
-    
-    <!-- High Risk Alerts -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card" style="border-left-color: #ef4444;">
-            <div class="stat-value" style="color: #ef4444;">{{ high_risk_count|default:0 }}</div>
-            <div class="stat-label">
-                <i class="bi bi-exclamation-triangle"></i> High Risk Alerts
+        <div style="position:relative; height:240px; display:flex; align-items:center; justify-content:center;">
+            <canvas id="riskChart"></canvas>
+            <div id="riskEmpty" style="display:none; flex-direction:column; align-items:center; justify-content:center; position:absolute; inset:0;">
+                <i class="bi bi-pie-chart" style="font-size:2.5rem; color:var(--text-dim); margin-bottom:10px;"></i>
+                <p style="color:var(--text-dim); font-size:.85rem; margin:0; text-align:center;">No risk data yet</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Charts Row -->
-<div class="row g-4 mb-4">
-    <!-- Revenue Trend Chart -->
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="bi bi-graph-up"></i> Revenue Trend (Last 30 Days)
-                </h5>
-                <div class="chart-container">
-                    <canvas id="revenueTrendChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Risk Distribution Pie Chart -->
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="bi bi-pie-chart"></i> Risk Distribution
-                </h5>
-                <div class="chart-container">
-                    <canvas id="riskPieChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Additional Stats Row -->
-<div class="row g-4 mb-4">
+<!-- Bottom Cards -->
+<div class="bottom-grid">
     <!-- Forecast Summary -->
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="text-muted mb-3">Forecast Summary</h6>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span>Recent Forecasts</span>
-                    <strong class="text-primary">{{ recent_forecasts }}</strong>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span>Avg Confidence</span>
-                    <strong class="text-success">{{ avg_confidence }}%</strong>
-                </div>
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-graph-up-arrow" style="color:var(--accent);"></i>&nbsp; Forecast Summary
+        </div>
+        <div class="card-body">
+            <div class="stat-row">
+                <span class="stat-row-label">Recent Forecasts</span>
+                <span class="stat-row-val" style="color:var(--accent);">{{ recent_forecasts_count|default:0 }}</span>
             </div>
+            <div class="stat-row">
+                <span class="stat-row-label">Avg Confidence</span>
+                <span class="stat-row-val" style="color:var(--blue);">{{ avg_confidence|default:0|floatformat:0 }}%</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-row-label">Forecast Horizon</span>
+                <span class="stat-row-val">30 days</span>
+            </div>
+            <a href="/dashboard/forecasts/" class="btn btn-outline-primary w-100 btn-sm mt-3">
+                View Forecasts <i class="bi bi-arrow-right"></i>
+            </a>
         </div>
     </div>
-    
-    <!-- Inventory Health -->
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="text-muted mb-3">Inventory Health</h6>
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span><span class="risk-badge-high">High Risk</span></span>
-                    <strong>{{ high_risk_count }}</strong>
-                </div>
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span><span class="risk-badge-medium">Medium Risk</span></span>
-                    <strong>{{ medium_risk_count }}</strong>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span><span class="risk-badge-low">Low Risk</span></span>
-                    <strong>{{ low_risk_count }}</strong>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Product Velocity -->
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="text-muted mb-3">Product Velocity</h6>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span><i class="bi bi-speedometer text-success"></i> Fast Movers</span>
-                    <strong class="text-success">{{ fast_movers }}</strong>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-speedometer2 text-danger"></i> Slow Movers</span>
-                    <strong class="text-danger">{{ slow_movers }}</strong>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Quick Actions -->
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="bi bi-lightning"></i> Quick Actions
-                </h5>
-                <div class="d-flex gap-2 flex-wrap">
-                    <a href="{% url 'dashboard:forecasts' %}" class="btn btn-primary">
-                        <i class="bi bi-graph-up"></i> View Forecasts
-                    </a>
-                    <a href="{% url 'dashboard:risk-monitor' %}" class="btn btn-warning">
-                        <i class="bi bi-exclamation-triangle"></i> Risk Monitor
-                    </a>
-                    <a href="{% url 'dashboard:recommendations' %}" class="btn btn-info text-white">
-                        <i class="bi bi-lightbulb"></i> Get Recommendations
-                    </a>
-                    <a href="/admin/" class="btn btn-outline-secondary">
-                        <i class="bi bi-gear"></i> Settings
-                    </a>
-                </div>
+    <!-- Inventory Health -->
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-heart-pulse" style="color:var(--accent);"></i>&nbsp; Inventory Health
+        </div>
+        <div class="card-body">
+            <div class="stat-row">
+                <span class="badge-risk badge-high">High Risk</span>
+                <span class="stat-row-val" style="color:var(--danger);">{{ high_risk_count|default:0 }}</span>
             </div>
+            <div class="stat-row">
+                <span class="badge-risk badge-medium">Medium Risk</span>
+                <span class="stat-row-val" style="color:var(--warn);">{{ medium_risk_count|default:0 }}</span>
+            </div>
+            <div class="stat-row">
+                <span class="badge-risk badge-low">Low Risk</span>
+                <span class="stat-row-val" style="color:var(--accent);">{{ low_risk_count|default:0 }}</span>
+            </div>
+            <a href="/dashboard/risk-monitor/" class="btn btn-outline-primary w-100 btn-sm mt-3">
+                View Risk Monitor <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Product Velocity -->
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-lightning" style="color:var(--accent);"></i>&nbsp; Product Velocity
+        </div>
+        <div class="card-body">
+            <div class="stat-row">
+                <span class="badge-risk badge-fast">Fast Movers</span>
+                <span class="stat-row-val" style="color:var(--blue);">{{ fast_movers|default:0 }}</span>
+            </div>
+            <div class="stat-row">
+                <span class="badge-risk badge-medium">Medium Movers</span>
+                <span class="stat-row-val" style="color:var(--warn);">{{ medium_movers|default:0 }}</span>
+            </div>
+            <div class="stat-row">
+                <span class="badge-risk badge-slow">Slow Movers</span>
+                <span class="stat-row-val" style="color:var(--danger);">{{ slow_movers|default:0 }}</span>
+            </div>
+            <a href="/dashboard/recommendations/" class="btn btn-outline-primary w-100 btn-sm mt-3">
+                View Recommendations <i class="bi bi-arrow-right"></i>
+            </a>
         </div>
     </div>
 </div>
@@ -175,121 +197,105 @@
 
 {% block extra_js %}
 <script>
-// Revenue Trend Chart
-fetch('/dashboard/api/revenue-trend/?days=30')  // ← Changed URL
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        const ctx = document.getElementById('revenueTrendChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: data,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null) {
-                                    if (context.datasetIndex === 0) {
-                                        label += '$' + context.parsed.y.toFixed(2);
-                                    } else {
-                                        label += context.parsed.y;
-                                    }
-                                }
-                                return label;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        title: {
-                            display: true,
-                            text: 'Revenue ($)'
-                        }
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-                        title: {
-                            display: true,
-                            text: 'Units Sold'
-                        },
-                        grid: {
-                            drawOnChartArea: false,
-                        },
-                    },
-                }
-            }
-        });
-    })
-    .catch(error => {
-        console.error('Error loading revenue trend:', error);
-        const container = document.getElementById('revenueTrendChart').parentElement;
-        container.innerHTML = '<div class="alert alert-warning">No sales data available for chart. Try generating forecasts first.</div>';
-    });
+document.addEventListener('DOMContentLoaded', function () {
 
-// Risk Distribution Pie Chart
-fetch('/dashboard/api/risk-distribution/')  // ← Changed URL
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        const ctx = document.getElementById('riskPieChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'pie',
-            data: data,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                label += context.parsed + ' products';
-                                return label;
-                            }
+    // ── Revenue Trend ──
+    fetch('/dashboard/api/revenue-trend/?days=30')
+        .then(r => r.json())
+        .then(data => {
+            const hasData = data.revenue && data.revenue.some(v => v > 0);
+
+            if (!hasData) {
+                document.getElementById('revenueEmpty').style.display = 'flex';
+                document.getElementById('revenueChart').style.display = 'none';
+                return;
+            }
+
+            new Chart(document.getElementById('revenueChart'), {
+                type: 'line',
+                data: {
+                    labels: data.labels || [],
+                    datasets: [
+                        {
+                            label: 'Revenue ($)',
+                            data: data.revenue || [],
+                            borderColor: '#00e5a0',
+                            backgroundColor: 'rgba(0,229,160,0.07)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            pointHoverRadius: 5,
+                        },
+                        {
+                            label: 'Units Sold',
+                            data: data.units || [],
+                            borderColor: '#4f8ef7',
+                            backgroundColor: 'rgba(79,142,247,0.05)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            pointHoverRadius: 5,
+                            yAxisID: 'y1',
                         }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        y:  { position: 'left',  grid: { color: 'rgba(255,255,255,0.04)' } },
+                        y1: { position: 'right', grid: { display: false } }
+                    },
+                    plugins: { legend: { position: 'top', labels: { boxWidth: 12, padding: 16 } } }
+                }
+            });
+        })
+        .catch(() => {
+            document.getElementById('revenueEmpty').style.display = 'flex';
+            document.getElementById('revenueChart').style.display = 'none';
+        });
+
+    // ── Risk Distribution ──
+    fetch('/dashboard/api/risk-distribution/')
+        .then(r => r.json())
+        .then(data => {
+            const total = (data.high || 0) + (data.medium || 0) + (data.low || 0);
+
+            if (total === 0) {
+                document.getElementById('riskEmpty').style.display = 'flex';
+                document.getElementById('riskChart').style.display = 'none';
+                return;
+            }
+
+            new Chart(document.getElementById('riskChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['High Risk', 'Medium Risk', 'Low Risk'],
+                    datasets: [{
+                        data: [data.high || 0, data.medium || 0, data.low || 0],
+                        backgroundColor: ['#ff4d6d', '#fbbf24', '#00e5a0'],
+                        borderColor: '#13131c',
+                        borderWidth: 3,
+                        hoverOffset: 6,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '68%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 14 } }
                     }
                 }
-            }
+            });
+        })
+        .catch(() => {
+            document.getElementById('riskEmpty').style.display = 'flex';
+            document.getElementById('riskChart').style.display = 'none';
         });
-    })
-    .catch(error => {
-        console.error('Error loading risk distribution:', error);
-        const container = document.getElementById('riskPieChart').parentElement;
-        container.innerHTML = '<div class="alert alert-warning">No risk alerts available. Generate risk analysis first.</div>';
-    });
+});
 </script>
 {% endblock %}

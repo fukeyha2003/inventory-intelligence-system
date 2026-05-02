@@ -26,11 +26,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     
     # Third-party apps
     "rest_framework",
     "django_celery_beat",
     "django_celery_results",
+     "allauth",  # ← Add these
+    "allauth.account",
+    "allauth.socialaccount",
     
     # Your apps
     "apps.inventory.apps.InventoryConfig",
@@ -38,7 +42,23 @@ INSTALLED_APPS = [
     "apps.recommendations.apps.RecommendationsConfig",
     "apps.dashboard.apps.DashboardConfig",
 ]
+SITE_ID = 1
+# Authentication settings
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
+# AllAuth settings (Updated for latest version)
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+LOGIN_REDIRECT_URL = '/dashboard/overview/'
+LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_ON_GET = True
+
+# New AllAuth settings format
+ACCOUNT_SIGNUP_FIELDS = ['email', 'password1', 'password2']
+ACCOUNT_LOGIN_METHODS = {'email'}  # Use set notation
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -48,6 +68,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"

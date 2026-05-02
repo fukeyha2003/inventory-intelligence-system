@@ -1,258 +1,142 @@
 {% extends 'base.html' %}
-
-{% block title %}Risk Monitor - Fashion Inventory Intelligence{% endblock %}
+{% block title %}Risk Monitor{% endblock %}
+{% block page_title %}Risk Monitor{% endblock %}
+{% block page_sub %}{{ company.name }} · Real-time inventory risk analysis{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <div class="page-header">
-            <h1><i class="bi bi-exclamation-triangle"></i> Risk Monitor</h1>
-            <p class="text-muted mb-0">Real-time inventory risk assessment and alerts</p>
+
+<!-- Summary KPIs -->
+<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:20px;">
+    <div class="kpi-card red">
+        <div class="kpi-label"><i class="bi bi-exclamation-octagon"></i> Critical</div>
+        <div class="kpi-value red">{{ critical_count|default:0 }}</div>
+        <div class="kpi-sub">Immediate action needed</div>
+    </div>
+    <div class="kpi-card warn">
+        <div class="kpi-label"><i class="bi bi-exclamation-triangle"></i> High Risk</div>
+        <div class="kpi-value warn">{{ high_risk_count|default:0 }}</div>
+        <div class="kpi-sub">Action within 7 days</div>
+    </div>
+    <div class="kpi-card blue">
+        <div class="kpi-label"><i class="bi bi-info-circle"></i> Medium Risk</div>
+        <div class="kpi-value blue">{{ medium_risk_count|default:0 }}</div>
+        <div class="kpi-sub">Monitor closely</div>
+    </div>
+    <div class="kpi-card green">
+        <div class="kpi-label"><i class="bi bi-check-circle"></i> Low Risk</div>
+        <div class="kpi-value green">{{ low_risk_count|default:0 }}</div>
+        <div class="kpi-sub">Healthy inventory</div>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="card mb-4">
+    <div class="card-body" style="padding:16px 20px !important;">
+        <div class="row g-2 align-items-center">
+            <div class="col-auto">
+                <span style="color:var(--text-muted);font-size:.82rem;">Filter by:</span>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-sm" id="riskFilter" onchange="filterTable()">
+                    <option value="">All Risk Levels</option>
+                    <option value="high">High Risk</option>
+                    <option value="medium">Medium Risk</option>
+                    <option value="low">Low Risk</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-sm" id="velocityFilter" onchange="filterTable()">
+                    <option value="">All Velocities</option>
+                    <option value="fast">Fast Movers</option>
+                    <option value="medium">Medium Movers</option>
+                    <option value="slow">Slow Movers</option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control form-control-sm" id="searchInput"
+                       placeholder="Search products..." onkeyup="filterTable()">
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Summary Cards -->
-<div class="row g-4 mb-4">
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card" style="border-left-color: #ef4444;">
-            <div class="stat-value" style="color: #ef4444;">{{ critical_alerts }}</div>
-            <div class="stat-label">
-                <i class="bi bi-exclamation-octagon"></i> Critical Alerts
-            </div>
-        </div>
+<!-- Risk Alerts Table -->
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-table text-accent me-2"></i>Risk Alerts</span>
+        <span style="color:var(--text-dim);font-size:.78rem;">{{ alerts|length }} total alerts</span>
     </div>
-    
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card" style="border-left-color: #f59e0b;">
-            <div class="stat-value" style="color: #f59e0b;">{{ high_urgency }}</div>
-            <div class="stat-label">
-                <i class="bi bi-exclamation-triangle"></i> High Urgency
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card" style="border-left-color: #667eea;">
-            <div class="stat-value" style="color: #667eea;">{{ total_alerts }}</div>
-            <div class="stat-label">
-                <i class="bi bi-bell"></i> Total Alerts
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card" style="border-left-color: #10b981;">
-            <div class="stat-value" style="color: #10b981;">
-                {% if category_risks %}
-                    {{ category_risks.0.avg_risk|floatformat:1 }}%
-                {% else %}
-                    0%
-                {% endif %}
-            </div>
-            <div class="stat-label">
-                <i class="bi bi-graph-down"></i> Avg Overstock Risk
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Filters & Table -->
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <div class="row align-items-center">
-                    <div class="col-md-4">
-                        <h5 class="mb-0"><i class="bi bi-table"></i> Risk Alerts</h5>
-                    </div>
-                    <div class="col-md-8">
-                        <form method="get" class="row g-2">
-                            <div class="col-md-4">
-                                <select name="risk_level" class="form-select form-select-sm" onchange="this.form.submit()">
-                                    <option value="all" {% if selected_risk_level == 'all' %}selected{% endif %}>All Risk Levels</option>
-                                    <option value="high" {% if selected_risk_level == 'high' %}selected{% endif %}>High Risk</option>
-                                    <option value="medium" {% if selected_risk_level == 'medium' %}selected{% endif %}>Medium Risk</option>
-                                    <option value="low" {% if selected_risk_level == 'low' %}selected{% endif %}>Low Risk</option>
-                                </select>
+    <div class="card-body p-0">
+        {% if alerts %}
+        <div class="table-responsive">
+            <table class="table table-hover mb-0" id="riskTable">
+                <thead>
+                    <tr>
+                        <th style="width:25%;">Product</th>
+                        <th style="width:12%;">Category</th>
+                        <th style="width:10%;">Risk Level</th>
+                        <th style="width:15%;">Overstock %</th>
+                        <th style="width:10%;">Velocity</th>
+                        <th style="width:10%;">Urgency</th>
+                        <th style="width:18%;">Recommended Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for alert in alerts %}
+                    <tr class="risk-row"
+                        data-risk="{{ alert.risk_level }}"
+                        data-velocity="{{ alert.velocity }}"
+                        style="border-bottom:1px solid var(--border);">
+                        <td>
+                            <div style="font-weight:500; color:var(--text); font-size:.9rem;">
+                                {{ alert.product.product_name }}
                             </div>
-                            <div class="col-md-4">
-                                <select name="urgency" class="form-select form-select-sm" onchange="this.form.submit()">
-                                    <option value="">All Urgency Levels</option>
-                                    <option value="Critical" {% if selected_urgency == 'Critical' %}selected{% endif %}>Critical</option>
-                                    <option value="High" {% if selected_urgency == 'High' %}selected{% endif %}>High</option>
-                                    <option value="Medium" {% if selected_urgency == 'Medium' %}selected{% endif %}>Medium</option>
-                                    <option value="Low" {% if selected_urgency == 'Low' %}selected{% endif %}>Low</option>
-                                </select>
+                            <div style="color:var(--text-muted); font-size:.75rem; margin-top:2px;">
+                                {{ alert.product.sku }}
                             </div>
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-sm btn-outline-secondary w-100" onclick="location.href='/dashboard/risk-monitor/'">
-                                    <i class="bi bi-arrow-clockwise"></i> Reset Filters
-                                </button>
+                        </td>
+                        <td style="color:var(--text-muted); font-size:.85rem;">
+                            {{ alert.product.category }}
+                        </td>
+                        <td>
+                            <span class="badge-risk badge-{{ alert.risk_level }}">
+                                {{ alert.risk_level|upper }}
+                            </span>
+                        </td>
+                        <td>
+                            <div style="font-weight:700; font-size:.9rem; margin-bottom:4px; color:{% if alert.overstock_risk_pct > 70 %}var(--danger){% elif alert.overstock_risk_pct > 40 %}var(--warn){% else %}var(--accent){% endif %};">
+                                {{ alert.overstock_risk_pct|floatformat:1 }}%
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body p-0">
-                {% if alerts %}
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Product</th>
-                                <th>SKU</th>
-                                <th>Risk Level</th>
-                                <th>Overstock %</th>
-                                <th>Velocity</th>
-                                <th>Urgency</th>
-                                <th>Action Required</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for alert in alerts %}
-                            <tr>
-                                <td>
-                                    <strong>{{ alert.product.product_name }}</strong>
-                                    <br>
-                                    <small class="text-muted">{{ alert.product.category }}</small>
-                                </td>
-                                <td><code>{{ alert.product.sku }}</code></td>
-                                <td>
-                                    {% if alert.risk_level == 'high' %}
-                                        <span class="risk-badge-high">High Risk</span>
-                                    {% elif alert.risk_level == 'medium' %}
-                                        <span class="risk-badge-medium">Medium Risk</span>
-                                    {% else %}
-                                        <span class="risk-badge-low">Low Risk</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <strong class="{% if alert.overstock_risk_pct > 70 %}text-danger{% elif alert.overstock_risk_pct > 40 %}text-warning{% else %}text-success{% endif %}">
-                                        {{ alert.overstock_risk_pct|floatformat:1 }}%
-                                    </strong>
-                                </td>
-                                <td>
-                                    {% if alert.velocity == 'fast' %}
-                                        <i class="bi bi-speedometer text-success"></i> Fast Mover
-                                    {% elif alert.velocity == 'slow' %}
-                                        <i class="bi bi-speedometer2 text-danger"></i> Slow Mover
-                                    {% else %}
-                                        <i class="bi bi-speedometer text-warning"></i> Medium
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if alert.urgency == 'Critical' %}
-                                        <span class="badge bg-danger">Critical</span>
-                                    {% elif alert.urgency == 'High' %}
-                                        <span class="badge bg-warning text-dark">High</span>
-                                    {% elif alert.urgency == 'Medium' %}
-                                        <span class="badge bg-info">Medium</span>
-                                    {% else %}
-                                        <span class="badge bg-secondary">Low</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <small>{{ alert.recommended_action|truncatewords:8 }}</small>
-                                </td>
-                                <td>
-                                    <a href="/api/product/{{ alert.product.sku }}/" class="btn btn-sm btn-outline-primary" title="View Details">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                {% else %}
-                <div class="text-center py-5">
-                    <i class="bi bi-check-circle" style="font-size: 4rem; color: #10b981;"></i>
-                    <h5 class="mt-3">No Risk Alerts</h5>
-                    <p class="text-muted">All products are within healthy inventory levels</p>
-                    <small class="text-muted">Or you haven't generated risk analysis yet</small>
-                    <br>
-                    <a href="#" class="btn btn-primary mt-3" onclick="generateRiskAnalysis()">
-                        <i class="bi bi-arrow-clockwise"></i> Generate Risk Analysis
-                    </a>
-                </div>
-                {% endif %}
-            </div>
+                            <div class="progress" style="height:4px; background:var(--ink-3);">
+                                <div class="progress-bar" style="width:{{ alert.overstock_risk_pct|floatformat:0 }}%; background:{% if alert.overstock_risk_pct > 70 %}var(--danger){% elif alert.overstock_risk_pct > 40 %}var(--warn){% else %}var(--accent){% endif %} !important;"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge-risk badge-{{ alert.velocity }}">
+                                {{ alert.velocity|capfirst }}
+                            </span>
+                        </td>
+                        <td>
+                            <span style="font-weight:600; font-size:.82rem; color:{% if alert.urgency == 'Critical' %}var(--danger){% elif alert.urgency == 'High' %}var(--warn){% else %}var(--text-muted){% endif %};">
+                                {{ alert.urgency }}
+                            </span>
+                        </td>
+                        <td style="font-size:.8rem; color:var(--text-muted); line-height:1.4;">
+                            {{ alert.recommended_action|truncatechars:60 }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    </div>
-</div>
-
-<!-- Category Risk Breakdown -->
-{% if category_risks %}
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0"><i class="bi bi-pie-chart"></i> Risk by Category</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>At-Risk Products</th>
-                                <th>Avg Overstock Risk</th>
-                                <th>Risk Level</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for cat in category_risks %}
-                            <tr>
-                                <td><strong>{{ cat.product__category }}</strong></td>
-                                <td>{{ cat.count }}</td>
-                                <td>{{ cat.avg_risk|floatformat:1 }}%</td>
-                                <td>
-                                    <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar {% if cat.avg_risk > 70 %}bg-danger{% elif cat.avg_risk > 40 %}bg-warning{% else %}bg-success{% endif %}" 
-                                             role="progressbar" 
-                                             style="width: {{ cat.avg_risk }}%"
-                                             aria-valuenow="{{ cat.avg_risk }}" 
-                                             aria-valuemin="0" 
-                                             aria-valuemax="100">
-                                            {{ cat.avg_risk|floatformat:0 }}%
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-check-circle" style="font-size:3rem;color:var(--accent);display:block;margin-bottom:16px;"></i>
+            <h5 style="color:var(--text);">No risk alerts</h5>
+            <p style="color:var(--text-muted);">Upload data and generate analysis to see risk alerts.</p>
+            <a href="/dashboard/upload/" class="btn btn-primary mt-3">Upload Data</a>
         </div>
-    </div>
-</div>
-{% endif %}
-
-<!-- Quick Actions -->
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <h6><i class="bi bi-lightning"></i> Quick Actions</h6>
-                <div class="d-flex gap-2 flex-wrap mt-3">
-                    <button class="btn btn-danger" onclick="exportHighRisk()">
-                        <i class="bi bi-file-earmark-excel"></i> Export High Risk Products
-                    </button>
-                    <button class="btn btn-warning" onclick="generateRiskAnalysis()">
-                        <i class="bi bi-arrow-clockwise"></i> Refresh Risk Analysis
-                    </button>
-                    <a href="/dashboard/recommendations/" class="btn btn-info text-white">
-                        <i class="bi bi-lightbulb"></i> View Recommendations
-                    </a>
-                    <button class="btn btn-outline-secondary" onclick="markAllResolved()">
-                        <i class="bi bi-check-all"></i> Mark All as Resolved
-                    </button>
-                </div>
-            </div>
-        </div>
+        {% endif %}
     </div>
 </div>
 
@@ -260,42 +144,22 @@
 
 {% block extra_js %}
 <script>
-function generateRiskAnalysis() {
-    if (confirm('Generate risk analysis for all products? This may take a few minutes.')) {
-        alert('Feature coming soon! Use Celery task or API endpoint to generate risk analysis.');
-        // In production, this would call: POST /api/risk-analysis/generate/
-    }
-}
+function filterTable() {
+    const risk = document.getElementById('riskFilter').value.toLowerCase();
+    const velocity = document.getElementById('velocityFilter').value.toLowerCase();
+    const search = document.getElementById('searchInput').value.toLowerCase();
 
-function exportHighRisk() {
-    alert('CSV export feature coming soon!');
-    // Would download CSV of high-risk products
-}
+    document.querySelectorAll('.risk-row').forEach(row => {
+        const rowRisk = row.dataset.risk.toLowerCase();
+        const rowVelocity = row.dataset.velocity.toLowerCase();
+        const rowText = row.textContent.toLowerCase();
 
-function markAllResolved() {
-    if (confirm('Mark all visible alerts as resolved?')) {
-        alert('Feature coming soon! This would update all alerts to resolved status.');
-    }
-}
+        const riskOk = !risk || rowRisk === risk;
+        const velOk = !velocity || rowVelocity === velocity;
+        const searchOk = !search || rowText.includes(search);
 
-// Auto-refresh every 5 minutes
-setInterval(function() {
-    const notice = document.createElement('div');
-    notice.className = 'alert alert-info position-fixed top-0 end-0 m-3';
-    notice.style.zIndex = '9999';
-    notice.innerHTML = '<i class="bi bi-info-circle"></i> Risk data updated. <a href="#" onclick="location.reload()">Refresh page</a>';
-    document.body.appendChild(notice);
-    
-    setTimeout(() => notice.remove(), 5000);
-}, 300000); // 5 minutes
+        row.style.display = (riskOk && velOk && searchOk) ? '' : 'none';
+    });
+}
 </script>
 {% endblock %}
-```
-
----
-
-## 🧪 Test the Risk Monitor
-
-Visit:
-```
-http://127.0.0.1:8000/dashboard/risk-monitor/

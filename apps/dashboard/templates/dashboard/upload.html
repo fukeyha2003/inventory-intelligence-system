@@ -1,0 +1,647 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Data - {{ company.name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .step-box {
+        flex: 1;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        transition: all 0.3s;
+    }
+
+    .step-box.done {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+    }
+
+    .step-box.pending {
+        background: #f3f4f6;
+        color: #6b7280;
+    }
+
+    .step-arrow {
+        font-size: 1.5rem;
+        color: #d1d5db;
+        margin: 0 10px;
+    }
+
+    .upload-card {
+        border: 2px solid #e5e7eb;
+        border-radius: 15px;
+        transition: all 0.3s;
+        height: 100%;
+    }
+
+    .upload-card.completed {
+        border-color: #10b981;
+        box-shadow: 0 4px 20px rgba(16,185,129,0.15);
+    }
+
+    .upload-card .card-header {
+        border-radius: 13px 13px 0 0 !important;
+        padding: 15px 20px;
+    }
+
+    .upload-card.completed .card-header {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        color: white !important;
+    }
+
+    .upload-card:not(.completed) .card-header {
+        background: #f8f9fa;
+    }
+
+    .code-block {
+        background: #1e293b;
+        color: #94a3b8;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-family: 'Courier New', monospace;
+        line-height: 1.6;
+        overflow-x: auto;
+        white-space: pre;
+    }
+
+    .generate-section {
+        background: linear-gradient(135deg, #667eea15, #764ba215);
+        border: 2px solid #667eea30;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+    }
+
+    #loadingOverlay {
+        display: none;
+        background: linear-gradient(135deg, #667eea15, #764ba215);
+        border: 2px solid #667eea;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 20px 0;
+    }
+
+    .generate-btn {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border: none;
+        padding: 15px 40px;
+        font-size: 1.1rem;
+        border-radius: 50px;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+        cursor: pointer;
+    }
+
+    .generate-btn:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102,126,234,0.5);
+        color: white;
+    }
+
+    .generate-btn:disabled {
+        background: linear-gradient(135deg, #9ca3af, #6b7280);
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+
+    .stat-card {
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .stat-card .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #667eea;
+    }
+
+    .progress-step {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 0;
+        opacity: 0.4;
+        transition: opacity 0.3s;
+    }
+
+    .progress-step.active {
+        opacity: 1;
+    }
+
+    .step-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #667eea;
+        flex-shrink: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="page-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1><i class="bi bi-cloud-upload"></i> Upload Your Data</h1>
+                    <p class="text-muted mb-0">
+                        Import your inventory data for
+                        <strong>{{ company.name }}</strong>
+                    </p>
+                </div>
+                <a href="/dashboard/overview/" class="btn btn-outline-primary">
+                    <i class="bi bi-speedometer2"></i> View Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Messages -->
+{% if messages %}
+<div class="row mb-4">
+    <div class="col-12">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<!-- Current Data Stats -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="stat-value">{{ products_count }}</div>
+            <div class="stat-label mt-1">
+                <i class="bi bi-box-seam text-primary"></i>
+                <span class="text-muted text-uppercase"
+                      style="font-size:0.8rem; letter-spacing:0.5px;">
+                    Products Loaded
+                </span>
+            </div>
+            {% if products_count > 0 %}
+            <small class="text-success mt-1 d-block">
+                <i class="bi bi-check-circle-fill"></i> Ready
+            </small>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card" style="border-left-color: #10b981;">
+            <div class="stat-value" style="color: #10b981;">
+                {{ sales_count|default:0 }}
+            </div>
+            <div class="stat-label mt-1">
+                <i class="bi bi-receipt" style="color:#10b981;"></i>
+                <span class="text-muted text-uppercase"
+                      style="font-size:0.8rem; letter-spacing:0.5px;">
+                    Sales Records
+                </span>
+            </div>
+            {% if sales_count > 0 %}
+            <small class="text-success mt-1 d-block">
+                <i class="bi bi-check-circle-fill"></i> Ready
+            </small>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card" style="border-left-color: #f59e0b;">
+            <div class="stat-value" style="color: #f59e0b;">
+                {{ inventory_count|default:0 }}
+            </div>
+            <div class="stat-label mt-1">
+                <i class="bi bi-boxes" style="color:#f59e0b;"></i>
+                <span class="text-muted text-uppercase"
+                      style="font-size:0.8rem; letter-spacing:0.5px;">
+                    Inventory Records
+                </span>
+            </div>
+            {% if inventory_count > 0 %}
+            <small class="text-success mt-1 d-block">
+                <i class="bi bi-check-circle-fill"></i> Ready
+            </small>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Upload Order Progress -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body py-3">
+                <h6 class="mb-3 text-muted">
+                    <i class="bi bi-list-ol text-primary"></i>
+                    Upload in this order:
+                </h6>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="step-box {% if products_count > 0 %}done{% else %}pending{% endif %}">
+                        {% if products_count > 0 %}
+                            <i class="bi bi-check-circle-fill fs-4"></i>
+                        {% else %}
+                            <i class="bi bi-1-circle fs-4"></i>
+                        {% endif %}
+                        <p class="mb-0 mt-1 fw-bold small">Products</p>
+                        <small>Upload first</small>
+                    </div>
+                    <i class="bi bi-arrow-right step-arrow"></i>
+                    <div class="step-box {% if sales_count > 0 %}done{% else %}pending{% endif %}">
+                        {% if sales_count > 0 %}
+                            <i class="bi bi-check-circle-fill fs-4"></i>
+                        {% else %}
+                            <i class="bi bi-2-circle fs-4"></i>
+                        {% endif %}
+                        <p class="mb-0 mt-1 fw-bold small">Sales History</p>
+                        <small>Upload second</small>
+                    </div>
+                    <i class="bi bi-arrow-right step-arrow"></i>
+                    <div class="step-box {% if inventory_count > 0 %}done{% else %}pending{% endif %}">
+                        {% if inventory_count > 0 %}
+                            <i class="bi bi-check-circle-fill fs-4"></i>
+                        {% else %}
+                            <i class="bi bi-3-circle fs-4"></i>
+                        {% endif %}
+                        <p class="mb-0 mt-1 fw-bold small">Inventory</p>
+                        <small>Upload third</small>
+                    </div>
+                    <i class="bi bi-arrow-right step-arrow"></i>
+                    <div class="step-box {% if products_count > 0 and sales_count > 0 and inventory_count > 0 %}done{% else %}pending{% endif %}">
+                        <i class="bi bi-magic fs-4"></i>
+                        <p class="mb-0 mt-1 fw-bold small">Generate AI</p>
+                        <small>Final step</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload Cards -->
+<div class="row g-4 mb-4">
+
+    <!-- Step 1: Products -->
+    <div class="col-lg-4">
+        <div class="card upload-card {% if products_count > 0 %}completed{% endif %}">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-box-seam"></i>
+                    Step 1: Products CSV
+                    {% if products_count > 0 %}
+                    <span class="badge bg-white text-success ms-2">
+                        ✓ {{ products_count }} loaded
+                    </span>
+                    {% endif %}
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted small">
+                    Upload your product catalog first.
+                    Required before uploading sales or inventory.
+                </p>
+                <div class="mb-3">
+                    <strong class="small">Required Columns:</strong>
+                    <div class="mt-1">
+                        <code class="small text-danger">
+                            product_id, product_name, category, price
+                        </code>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <strong class="small">Optional:</strong>
+                    <div class="mt-1">
+                        <code class="small text-muted">
+                            subcategory, color, size, season, cost, launch_date
+                        </code>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <strong class="small">Sample Format:</strong>
+                    <div class="code-block mt-1">product_id,product_name,category,price
+P001,Blue Jeans,Bottoms,49.99
+P002,White Shirt,Tops,29.99</div>
+                </div>
+                <form method="post"
+                      action="/dashboard/upload/products/"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="file" name="file" accept=".csv"
+                               class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-upload"></i>
+                        {% if products_count > 0 %}
+                            Re-upload Products
+                        {% else %}
+                            Upload Products
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: Sales History -->
+    <div class="col-lg-4">
+        <div class="card upload-card {% if sales_count > 0 %}completed{% endif %}">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-receipt"></i>
+                    Step 2: Sales History CSV
+                    {% if sales_count > 0 %}
+                    <span class="badge bg-white text-success ms-2">
+                        ✓ {{ sales_count }} records
+                    </span>
+                    {% endif %}
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted small">
+                    Upload historical sales data.
+                    Used to train ML forecasting models.
+                </p>
+                {% if products_count == 0 %}
+                <div class="alert alert-warning small py-2">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    Upload products first!
+                </div>
+                {% endif %}
+                <div class="mb-3">
+                    <strong class="small">Required Columns:</strong>
+                    <div class="mt-1">
+                        <code class="small text-danger">
+                            product_id, date, units_sold, revenue
+                        </code>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <strong class="small">Optional:</strong>
+                    <div class="mt-1">
+                        <code class="small text-muted">discount_rate</code>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <strong class="small">Sample Format:</strong>
+                    <div class="code-block mt-1">product_id,date,units_sold,revenue
+P001,2025-01-01,5,249.95
+P001,2025-01-02,3,149.97</div>
+                </div>
+                <form method="post"
+                      action="/dashboard/upload/sales/"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="file" name="file" accept=".csv"
+                               class="form-control"
+                               {% if products_count == 0 %}disabled{% endif %}
+                               required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100"
+                            {% if products_count == 0 %}disabled{% endif %}>
+                        <i class="bi bi-upload"></i>
+                        {% if sales_count > 0 %}
+                            Re-upload Sales
+                        {% else %}
+                            Upload Sales History
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: Inventory -->
+    <div class="col-lg-4">
+        <div class="card upload-card {% if inventory_count > 0 %}completed{% endif %}">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-boxes"></i>
+                    Step 3: Inventory CSV
+                    {% if inventory_count > 0 %}
+                    <span class="badge bg-white text-success ms-2">
+                        ✓ {{ inventory_count }} records
+                    </span>
+                    {% endif %}
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted small">
+                    Upload current stock levels.
+                    Used for risk analysis and recommendations.
+                </p>
+                {% if products_count == 0 %}
+                <div class="alert alert-warning small py-2">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    Upload products first!
+                </div>
+                {% endif %}
+                <div class="mb-3">
+                    <strong class="small">Required Columns:</strong>
+                    <div class="mt-1">
+                        <code class="small text-danger">
+                            product_id, current_stock
+                        </code>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <strong class="small">Optional:</strong>
+                    <div class="mt-1">
+                        <code class="small text-muted">
+                            warehouse_location, last_restock_date
+                        </code>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <strong class="small">Sample Format:</strong>
+                    <div class="code-block mt-1">product_id,current_stock,warehouse_location
+P001,150,Warehouse A
+P002,75,Warehouse B</div>
+                </div>
+                <form method="post"
+                      action="/dashboard/upload/inventory/"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="file" name="file" accept=".csv"
+                               class="form-control"
+                               {% if products_count == 0 %}disabled{% endif %}
+                               required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100"
+                            {% if products_count == 0 %}disabled{% endif %}>
+                        <i class="bi bi-upload"></i>
+                        {% if inventory_count > 0 %}
+                            Re-upload Inventory
+                        {% else %}
+                            Upload Inventory
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Generate Analysis Section -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="generate-section">
+            <i class="bi bi-cpu-fill fs-1 text-primary mb-3 d-block"></i>
+            <h3 class="fw-bold">Generate AI Analysis</h3>
+            <p class="text-muted mb-4">
+                Generate forecasts and risk analysis for
+                <strong>{{ company.name }}</strong>
+            </p>
+
+            {% if products_count == 0 %}
+            <div class="alert alert-warning d-inline-flex align-items-center gap-2 mb-4">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span>Upload <strong>Products CSV</strong> first to continue</span>
+            </div>
+            {% elif sales_count == 0 %}
+            <div class="alert alert-warning d-inline-flex align-items-center gap-2 mb-4">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span>Upload <strong>Sales History CSV</strong> next to continue</span>
+            </div>
+            {% else %}
+            <div class="alert alert-success d-inline-flex align-items-center gap-2 mb-4">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>
+                    <strong>{{ products_count }} products</strong> and
+                    <strong>{{ sales_count }} sales records</strong> ready!
+                </span>
+            </div>
+            {% endif %}
+
+            <!-- Loading Overlay -->
+            <div id="loadingOverlay">
+                <div class="d-flex align-items-center justify-content-center gap-3 mb-3">
+                    <div class="spinner-border text-primary" role="status"
+                         style="width:3rem;height:3rem;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="text-start">
+                        <h5 class="mb-1">🤖 AI Analysis Running...</h5>
+                        <p class="text-muted mb-0 small">
+                            Training ML models for {{ products_count }} products.
+                            Please <strong>don't close this page!</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="d-inline-block text-start mt-2">
+                    <div class="progress-step active" id="pstep1">
+                        <div class="step-dot"></div>
+                        <small>Loading sales data...</small>
+                    </div>
+                    <div class="progress-step" id="pstep2">
+                        <div class="step-dot"></div>
+                        <small>Training forecasting models...</small>
+                    </div>
+                    <div class="progress-step" id="pstep3">
+                        <div class="step-dot"></div>
+                        <small>Generating 30-day forecasts...</small>
+                    </div>
+                    <div class="progress-step" id="pstep4">
+                        <div class="step-dot"></div>
+                        <small>Calculating inventory risks...</small>
+                    </div>
+                    <div class="progress-step" id="pstep5">
+                        <div class="step-dot"></div>
+                        <small>Saving results to dashboard...</small>
+                    </div>
+                </div>
+                <div class="progress mt-3"
+                     style="height:6px;max-width:400px;margin:0 auto;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                         style="width:100%;background:linear-gradient(135deg,#667eea,#764ba2);">
+                    </div>
+                </div>
+                <p class="text-muted small mt-3">
+                    <i class="bi bi-clock"></i> Estimated time: 2-3 minutes
+                </p>
+            </div>
+
+            <!-- Generate Form -->
+            <form method="post"
+                  action="/dashboard/upload/generate/"
+                  id="generateForm">
+                {% csrf_token %}
+                <button type="button"
+                        class="generate-btn"
+                        id="generateBtn"
+                        {% if products_count == 0 or sales_count == 0 %}
+                            disabled
+                        {% endif %}
+                        onclick="startGeneration()">
+                    <i class="bi bi-magic me-2"></i>
+                    Generate Forecasts & Risk Analysis
+                </button>
+            </form>
+
+            <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+                <span class="badge bg-light text-dark border px-3 py-2">
+                    <i class="bi bi-graph-up text-primary"></i> 30-Day Forecasts
+                </span>
+                <span class="badge bg-light text-dark border px-3 py-2">
+                    <i class="bi bi-exclamation-triangle text-warning"></i> Risk Detection
+                </span>
+                <span class="badge bg-light text-dark border px-3 py-2">
+                    <i class="bi bi-lightbulb text-success"></i> Smart Recommendations
+                </span>
+                <span class="badge bg-light text-dark border px-3 py-2">
+                    <i class="bi bi-shield-lock text-info"></i> Your Data is Private
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function startGeneration() {
+    document.getElementById('loadingOverlay').style.display = 'block';
+    document.getElementById('generateBtn').style.display = 'none';
+
+    const steps = ['pstep1','pstep2','pstep3','pstep4','pstep5'];
+    let i = 1;
+    const interval = setInterval(() => {
+        if (i < steps.length) {
+            document.getElementById(steps[i]).classList.add('active');
+            i++;
+        } else {
+            clearInterval(interval);
+        }
+    }, 25000);
+
+    setTimeout(() => {
+        document.getElementById('generateForm').submit();
+    }, 300);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        document.querySelectorAll('.alert-success').forEach(alert => {
+            new bootstrap.Alert(alert).close();
+        });
+    }, 5000);
+});
+</script>
+{% endblock %}

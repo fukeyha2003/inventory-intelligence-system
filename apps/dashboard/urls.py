@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from apps.dashboard import billing
 app_name = 'dashboard'
 
 urlpatterns = [
@@ -20,5 +20,10 @@ urlpatterns = [
     path('api/revenue-trend/', views.api_revenue_trend, name='api-revenue-trend'),
     path('api/risk-distribution/', views.api_risk_distribution, name='api-risk-distribution'),
     path('api/product-forecast/<str:sku>/', views.api_product_forecast, name='api-product-forecast'),
-    
+     # Billing
+    path('billing/upgrade/', billing.create_checkout_session, name='billing_upgrade'),
+    path('billing/success/', billing.billing_success, name='billing_success'),
+    path('billing/cancel/', billing.billing_cancel, name='billing_cancel'),
+    path('billing/portal/', billing.customer_portal, name='billing_portal'),
+    path('webhooks/stripe/', billing.stripe_webhook, name='stripe_webhook'),
 ]

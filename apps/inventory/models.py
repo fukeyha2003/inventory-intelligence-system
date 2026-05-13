@@ -13,25 +13,48 @@ from django.contrib.auth.models import User
 # ============================================================================
 
 class Company(models.Model):
-    """Company/Organization model for multi-tenant support"""
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default=True)
     
-    # Subscription info (optional)
+    # Payment fields
     subscription_plan = models.CharField(
-        max_length=50, 
-        choices=[('free', 'Free'), ('pro', 'Pro'), ('enterprise', 'Enterprise')],
+        max_length=20,
+        choices=[
+            ('free', 'Free'),
+            ('pro', 'Professional'),
+            ('enterprise', 'Enterprise'),
+        ],
         default='free'
     )
+    stripe_customer_id = models.CharField(max_length=100, blank=True, null=True)
+    stripe_subscription_id = models.CharField(max_length=100, blank=True, null=True)
+    subscription_status = models.CharField(
+        max_length=20,
+        choices=[
+            ('active', 'Active'),
+            ('canceled', 'Canceled'),
+            ('past_due', 'Past Due'),
+            ('trialing', 'Trialing'),
+        ],
+        blank=True,
+        null=True
+    )
+    trial_ends_at = models.DateTimeField(blank=True, null=True)
+    subscription_current_period_end = models.DateTimeField(blank=True, null=True)
     
-    class Meta:
-        db_table = 'companies'
-        verbose_name_plural = 'Companies'
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
-    def __str__(self):
-        return self.name
+    # Feature limits based on plan
+    def max_products(self):
+        limits = {'free': 50, 'pro': 500, 'enterprise': 999999}
+        return limits.get(self.subscription_plan, 50)
+    
+    def can_access_api(self):
+        return self.subscription_plan in ['pro', 'enterprise']
+    
+    def can_multi_warehouse(self):
+        return self.subscription_plan in ['pro', 'enterprise']
 
 
 class UserProfile(models.Model):

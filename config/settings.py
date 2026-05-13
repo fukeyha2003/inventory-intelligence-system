@@ -1,7 +1,7 @@
 """
 Django settings for fashion_inventory_system project.
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,7 +41,19 @@ INSTALLED_APPS = [
     "apps.forecasting.apps.ForecastingConfig",
     "apps.recommendations.apps.RecommendationsConfig",
     "apps.dashboard.apps.DashboardConfig",
+    'djstripe',
 ]
+# Stripe Configuration
+STRIPE_LIVE_SECRET_KEY = os.environ.get("STRIPE_LIVE_SECRET_KEY", "")
+STRIPE_TEST_SECRET_KEY = os.environ.get("STRIPE_TEST_SECRET_KEY", "sk_test_...")
+STRIPE_LIVE_PUBLIC_KEY = os.environ.get("STRIPE_LIVE_PUBLIC_KEY", "")
+STRIPE_TEST_PUBLIC_KEY = os.environ.get("STRIPE_TEST_PUBLIC_KEY", "pk_test_...")
+STRIPE_LIVE_MODE = False  # Change to True in production
+
+DJSTRIPE_WEBHOOK_SECRET = os.environ.get("DJSTRIPE_WEBHOOK_SECRET", "whsec_...")
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
+DJSTRIPE_USE_NATIVE_JSONFIELD = True
+
 SITE_ID = 1
 # Authentication settings
 AUTHENTICATION_BACKENDS = [
